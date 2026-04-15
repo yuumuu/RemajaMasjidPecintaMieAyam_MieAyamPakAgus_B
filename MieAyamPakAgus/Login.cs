@@ -5,8 +5,16 @@ using System.Windows.Forms;
 
 namespace MieAyamPakAgus
 {
+    /// <summary>
+    /// Form login untuk autentikasi admin dan super admin.
+    /// </summary>
     public partial class Login : Form
     {
+        /// <summary>
+        /// PIN rahasia untuk mengakses mode Super Admin.
+        /// </summary>
+        private const string SuperAdminPin = "123456";
+
         public Login()
         {
             InitializeComponent();
@@ -17,9 +25,10 @@ namespace MieAyamPakAgus
             string username = InputUsername.Text.Trim();
             string password = InputPassword.Text.Trim();
 
+            // Validasi field tidak boleh kosong
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Username and Password are required!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Username dan Password harus diisi!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -35,42 +44,48 @@ namespace MieAyamPakAgus
             {
                 int userId = Convert.ToInt32(dt.Rows[0]["id_user"]);
                 this.Hide();
-                CRUDForm mainForm = new CRUDForm(userId, false); // Regular admin mode
+                CRUDForm mainForm = new CRUDForm(userId, false); // Mode admin biasa
                 mainForm.ShowDialog();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Invalid Username or Password!", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Username atau Password salah!", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ChkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
+            // Toggle visibilitas password
             InputPassword.UseSystemPasswordChar = !ChkShowPassword.Checked;
         }
 
         private void BtnModalSuperAdmin_Click(object sender, EventArgs e)
         {
-            string pin = Microsoft.VisualBasic.Interaction.InputBox("Enter Super Admin PIN:", "Super Admin Mode", "");
+            string pin = Microsoft.VisualBasic.Interaction.InputBox("Masukkan PIN Super Admin:", "Mode Super Admin", "");
 
-            if (pin == "123456")
+            if (pin == SuperAdminPin)
             {
-                MessageBox.Show("Super Admin Mode Activated!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Mode Super Admin Aktif!", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
-                CRUDForm mainForm = new CRUDForm(0, true); // true for Super Admin Mode
+                CRUDForm mainForm = new CRUDForm(0, true); // true = Mode Super Admin
                 mainForm.ShowDialog();
                 this.Close();
             }
             else if (!string.IsNullOrEmpty(pin))
             {
-                MessageBox.Show("Incorrect PIN!", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("PIN salah!", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Login_Load(object sender, EventArgs e)
         {
-
+            // Cek koneksi database saat form dibuka
+            if (!DBConfig.TestConnection())
+            {
+                MessageBox.Show("Gagal terhubung ke database. Periksa konfigurasi koneksi.", "Koneksi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
+
