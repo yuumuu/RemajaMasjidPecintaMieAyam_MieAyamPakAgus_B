@@ -19,7 +19,6 @@ namespace MieAyamPakAgus
             string username = InputUsername.Text.Trim();
             string password = InputPassword.Text.Trim();
 
-            // Validasi field tidak boleh kosong
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Username dan Password harus diisi!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -38,7 +37,7 @@ namespace MieAyamPakAgus
             {
                 int userId = Convert.ToInt32(dt.Rows[0]["id_user"]);
                 this.Hide();
-                CRUDForm mainForm = new CRUDForm(userId, false); // Mode admin biasa
+                CRUDForm mainForm = new CRUDForm(userId, false);
                 mainForm.ShowDialog();
                 this.Close();
             }
@@ -62,7 +61,7 @@ namespace MieAyamPakAgus
             {
                 MessageBox.Show("Mode Super Admin Aktif!", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
-                CRUDForm mainForm = new CRUDForm(0, true); // true = Mode Super Admin
+                CRUDForm mainForm = new CRUDForm(0, true);
                 mainForm.ShowDialog();
                 this.Close();
             }
@@ -74,7 +73,6 @@ namespace MieAyamPakAgus
 
         private void Login_Load(object sender, EventArgs e)
         {
-            // Cek koneksi database saat form dibuka
             if (!DBConfig.TestConnection())
             {
                 MessageBox.Show("Gagal terhubung ke database. Periksa konfigurasi koneksi.", "Koneksi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
