@@ -6,8 +6,6 @@
 
 ## 📸 Screenshots
 
-> **Catatan:** Ganti placeholder di bawah ini dengan screenshot asli dari aplikasi Anda.
-
 ### Halaman Login
 ![Halaman Login](docs/screenshots/login.png)
 > *Tampilan form login dengan opsi Super Admin Mode*

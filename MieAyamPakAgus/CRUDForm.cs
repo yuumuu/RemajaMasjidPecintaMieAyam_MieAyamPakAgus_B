@@ -10,7 +10,7 @@ namespace MieAyamPakAgus
     {
         private int currentUserId;
         private bool isSuperAdmin;
-        private string selectedId = ""; // To store ID for update/delete
+        private string selectedId = "";
 
         public CRUDForm(int userId, bool superAdmin)
         {
@@ -31,8 +31,8 @@ namespace MieAyamPakAgus
 
             // Wire up Pelanggan
             this.BtnSavePelanggan.Click += BtnSavePelanggan_Click;
-            this.button2.Click += BtnDelPelanggan_Click; // Del
-            this.button1.Click += BtnClearPelanggan_Click; // Clear
+            this.button2.Click += BtnDelPelanggan_Click;
+            this.button1.Click += BtnClearPelanggan_Click;
 
             // Wire up Admin
             this.BtnSaveAdmin.Click += BtnSaveAdmin_Click;
@@ -304,8 +304,7 @@ namespace MieAyamPakAgus
 
         private void InputPelanggan_TextChanged(object sender, EventArgs e)
         {
-            // If text doesn't match any item, clear the phone if it was auto-filled
-            // But usually we just let the user type.
+            
         }
 
         private void InputMeja_SelectedIndexChanged(object sender, EventArgs e)
@@ -343,7 +342,6 @@ namespace MieAyamPakAgus
                 return;
             }
 
-            // Smart Pelanggan logic: Get or Create
             DataTable dtP = DBConfig.ExecuteQuery("SELECT id_pelanggan FROM Pelanggan WHERE no_telepon = @telp", new SqlParameter[] { new SqlParameter("@telp", telpPelanggan) });
             if (dtP != null && dtP.Rows.Count > 0)
             {
@@ -351,7 +349,6 @@ namespace MieAyamPakAgus
             }
             else
             {
-                // Create new
                 DBConfig.ExecuteNonQuery("INSERT INTO Pelanggan (nama, no_telepon) VALUES (@nama, @telp)", new SqlParameter[] { 
                     new SqlParameter("@nama", namaPelanggan),
                     new SqlParameter("@telp", telpPelanggan)
@@ -362,7 +359,7 @@ namespace MieAyamPakAgus
             SqlParameter[] parameters = {
                 new SqlParameter("@id_p", idPelanggan),
                 new SqlParameter("@id_m", InputMeja.SelectedValue),
-                new SqlParameter("@id_u", currentUserId == 0 ? 1 : currentUserId), // Use default user if super admin
+                new SqlParameter("@id_u", currentUserId == 0 ? 1 : currentUserId),
                 new SqlParameter("@waktu", InputWaktuReservasi.Text),
                 new SqlParameter("@jml", InputJumlahOrangReservasi.Text),
                 new SqlParameter("@bukti", InputBuktiReservasi.Text)
