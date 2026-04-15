@@ -5,14 +5,8 @@ using System.Windows.Forms;
 
 namespace MieAyamPakAgus
 {
-    /// <summary>
-    /// Form login untuk autentikasi admin dan super admin.
-    /// </summary>
     public partial class Login : Form
     {
-        /// <summary>
-        /// PIN rahasia untuk mengakses mode Super Admin.
-        /// </summary>
         private const string SuperAdminPin = "123456";
 
         public Login()
