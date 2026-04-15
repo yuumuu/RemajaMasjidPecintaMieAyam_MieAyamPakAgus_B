@@ -113,6 +113,7 @@
             // 
             // BtnModalSuperAdmin
             // 
+            this.BtnModalSuperAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnModalSuperAdmin.BackColor = System.Drawing.SystemColors.Highlight;
             this.BtnModalSuperAdmin.Font = new System.Drawing.Font("Bricolage Grotesque 14pt Medium", 9F, System.Drawing.FontStyle.Bold);
             this.BtnModalSuperAdmin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -127,6 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1774, 1129);
             this.Controls.Add(this.BtnModalSuperAdmin);
             this.Controls.Add(this.ChkShowPassword);
