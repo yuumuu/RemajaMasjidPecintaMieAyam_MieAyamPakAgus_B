@@ -8,6 +8,7 @@ namespace MieAyamPakAgus
 {
     public partial class CRUDForm : Form
     {
+        // bismillah final fix kelar
         private int currentUserId;
         private bool isSuperAdmin;
         private string selectedId = "";
