@@ -144,6 +144,7 @@ namespace MieAyamPakAgus
             this.MinimumSize = new System.Drawing.Size(26, 71);
             this.Name = "Login";
             this.Text = "Reservasi App";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -67,5 +67,10 @@ namespace MieAyamPakAgus
                 MessageBox.Show("Incorrect PIN!", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
