@@ -98,7 +98,7 @@ namespace MieAyamPakAgus
             }
         }
 
-        #region Meja CRUD
+
         private void LoadMeja()
         {
             DataTable dt = DBConfig.ExecuteQuery("SELECT id_meja, kode, kapasitas, status_meja FROM Meja");
@@ -113,6 +113,13 @@ namespace MieAyamPakAgus
 
             if (string.IsNullOrEmpty(kode) || string.IsNullOrEmpty(kapasitas)) {
                 MessageBox.Show("Semua field Meja harus diisi!");
+                return;
+            }
+
+            // Cek apakah kapasitas benar-benar angka
+            if (!int.TryParse(kapasitas, out _))
+            {
+                MessageBox.Show("Kapasitas harus berupa angka!");
                 return;
             }
 
@@ -152,9 +159,9 @@ namespace MieAyamPakAgus
             ClearForm();
             selectedId = "";
         }
-        #endregion
 
-        #region Pelanggan CRUD
+
+
         private void LoadPelanggan()
         {
             DataTable dt = DBConfig.ExecuteQuery("SELECT * FROM Pelanggan");
@@ -207,9 +214,9 @@ namespace MieAyamPakAgus
             ClearForm();
             selectedId = "";
         }
-        #endregion
 
-        #region Admin CRUD
+
+
         private void LoadAdmin()
         {
             DataTable dt = DBConfig.ExecuteQuery("SELECT * FROM Admin");
@@ -262,9 +269,9 @@ namespace MieAyamPakAgus
             ClearForm();
             selectedId = "";
         }
-        #endregion
 
-        #region Reservasi CRUD
+
+
         private void LoadReservasi()
         {
             DataTable dt = DBConfig.ExecuteQuery(@"
@@ -397,9 +404,9 @@ namespace MieAyamPakAgus
             ClearForm();
             selectedId = "";
         }
-        #endregion
 
-        #region Common Methods
+
+
         private void DataTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -491,7 +498,7 @@ namespace MieAyamPakAgus
                 DataTable.DataSource = dt;
             }
         }
-        #endregion
+
 
     }
 }
