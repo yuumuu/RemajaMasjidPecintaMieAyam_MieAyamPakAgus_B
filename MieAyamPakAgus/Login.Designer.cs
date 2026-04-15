@@ -35,6 +35,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.BtnLogin = new System.Windows.Forms.Button();
             this.ChkShowPassword = new System.Windows.Forms.CheckBox();
+            this.BtnModalSuperAdmin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LblLogin
@@ -75,7 +76,7 @@
             this.InputUsername.MaximumSize = new System.Drawing.Size(640, 55);
             this.InputUsername.MinimumSize = new System.Drawing.Size(640, 55);
             this.InputUsername.Name = "InputUsername";
-            this.InputUsername.Size = new System.Drawing.Size(640, 55);
+            this.InputUsername.Size = new System.Drawing.Size(640, 46);
             this.InputUsername.TabIndex = 3;
             // 
             // textBox1
@@ -86,7 +87,7 @@
             this.textBox1.MaximumSize = new System.Drawing.Size(640, 55);
             this.textBox1.MinimumSize = new System.Drawing.Size(640, 55);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(640, 55);
+            this.textBox1.Size = new System.Drawing.Size(640, 46);
             this.textBox1.TabIndex = 4;
             // 
             // BtnLogin
@@ -110,11 +111,24 @@
             this.ChkShowPassword.Text = "Show Password";
             this.ChkShowPassword.UseVisualStyleBackColor = true;
             // 
+            // BtnModalSuperAdmin
+            // 
+            this.BtnModalSuperAdmin.BackColor = System.Drawing.SystemColors.Highlight;
+            this.BtnModalSuperAdmin.Font = new System.Drawing.Font("Bricolage Grotesque 14pt Medium", 9F, System.Drawing.FontStyle.Bold);
+            this.BtnModalSuperAdmin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BtnModalSuperAdmin.Location = new System.Drawing.Point(1412, 1018);
+            this.BtnModalSuperAdmin.Name = "BtnModalSuperAdmin";
+            this.BtnModalSuperAdmin.Size = new System.Drawing.Size(326, 75);
+            this.BtnModalSuperAdmin.TabIndex = 7;
+            this.BtnModalSuperAdmin.Text = "Super Admin Mode";
+            this.BtnModalSuperAdmin.UseVisualStyleBackColor = false;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1774, 1129);
+            this.Controls.Add(this.BtnModalSuperAdmin);
             this.Controls.Add(this.ChkShowPassword);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.textBox1);
@@ -139,6 +153,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button BtnLogin;
         private System.Windows.Forms.CheckBox ChkShowPassword;
+        private System.Windows.Forms.Button BtnModalSuperAdmin;
     }
 }
 
