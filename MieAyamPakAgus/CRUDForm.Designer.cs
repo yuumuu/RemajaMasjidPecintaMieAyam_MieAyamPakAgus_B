@@ -1,4 +1,4 @@
-﻿namespace MieAyamPakAgus
+namespace MieAyamPakAgus
 {
     partial class CRUDForm
     {
@@ -36,6 +36,14 @@
             this.LogoApp = new System.Windows.Forms.ImageList(this.components);
             this.TabMenu = new System.Windows.Forms.TabControl();
             this.TabMeja = new System.Windows.Forms.TabPage();
+            this.TabAdmin = new System.Windows.Forms.TabPage();
+            this.BtnClearAdmin = new System.Windows.Forms.Button();
+            this.BtnDelAdmin = new System.Windows.Forms.Button();
+            this.BtnSaveAdmin = new System.Windows.Forms.Button();
+            this.InputAdminPassword = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.InputAdminUsername = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.BtnClearMeja = new System.Windows.Forms.Button();
             this.BtnDelMeja = new System.Windows.Forms.Button();
             this.BtnSaveMeja = new System.Windows.Forms.Button();
@@ -60,7 +68,7 @@
             this.InputPelanggan = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.InputMeja = new System.Windows.Forms.ComboBox();
-            this.InputWaktuReservasi = new System.Windows.Forms.TextBox();
+            this.InputWaktuReservasi = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.TabPelanggan = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
@@ -133,6 +141,7 @@
             this.TabMenu.Controls.Add(this.TabMeja);
             this.TabMenu.Controls.Add(this.TabReservasi);
             this.TabMenu.Controls.Add(this.TabPelanggan);
+            this.TabMenu.Controls.Add(this.TabAdmin);
             this.TabMenu.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabMenu.Location = new System.Drawing.Point(73, 140);
             this.TabMenu.Name = "TabMenu";
@@ -422,11 +431,11 @@
             // InputWaktuReservasi
             // 
             this.InputWaktuReservasi.Location = new System.Drawing.Point(29, 359);
-            this.InputWaktuReservasi.MaximumSize = new System.Drawing.Size(382, 42);
-            this.InputWaktuReservasi.MinimumSize = new System.Drawing.Size(382, 42);
             this.InputWaktuReservasi.Name = "InputWaktuReservasi";
             this.InputWaktuReservasi.Size = new System.Drawing.Size(382, 39);
             this.InputWaktuReservasi.TabIndex = 1;
+            this.InputWaktuReservasi.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.InputWaktuReservasi.CustomFormat = "yyyy-MM-dd HH:mm";
             // 
             // label4
             // 
@@ -454,6 +463,88 @@
             this.TabPelanggan.TabIndex = 2;
             this.TabPelanggan.Text = "Pelanggan";
             this.TabPelanggan.UseVisualStyleBackColor = true;
+            // 
+            // TabAdmin
+            // 
+            this.TabAdmin.Controls.Add(this.BtnClearAdmin);
+            this.TabAdmin.Controls.Add(this.BtnDelAdmin);
+            this.TabAdmin.Controls.Add(this.BtnSaveAdmin);
+            this.TabAdmin.Controls.Add(this.InputAdminPassword);
+            this.TabAdmin.Controls.Add(this.label11);
+            this.TabAdmin.Controls.Add(this.InputAdminUsername);
+            this.TabAdmin.Controls.Add(this.label10);
+            this.TabAdmin.Location = new System.Drawing.Point(8, 58);
+            this.TabAdmin.Name = "TabAdmin";
+            this.TabAdmin.Padding = new System.Windows.Forms.Padding(3);
+            this.TabAdmin.Size = new System.Drawing.Size(443, 867);
+            this.TabAdmin.TabIndex = 3;
+            this.TabAdmin.Text = "Admin";
+            this.TabAdmin.UseVisualStyleBackColor = true;
+            // 
+            // BtnClearAdmin
+            // 
+            this.BtnClearAdmin.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.BtnClearAdmin.Location = new System.Drawing.Point(231, 781);
+            this.BtnClearAdmin.Name = "BtnClearAdmin";
+            this.BtnClearAdmin.Size = new System.Drawing.Size(185, 61);
+            this.BtnClearAdmin.TabIndex = 15;
+            this.BtnClearAdmin.Text = "Clear";
+            this.BtnClearAdmin.UseVisualStyleBackColor = true;
+            // 
+            // BtnDelAdmin
+            // 
+            this.BtnDelAdmin.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.BtnDelAdmin.Location = new System.Drawing.Point(34, 781);
+            this.BtnDelAdmin.Name = "BtnDelAdmin";
+            this.BtnDelAdmin.Size = new System.Drawing.Size(185, 61);
+            this.BtnDelAdmin.TabIndex = 14;
+            this.BtnDelAdmin.Text = "Delete";
+            this.BtnDelAdmin.UseVisualStyleBackColor = true;
+            // 
+            // BtnSaveAdmin
+            // 
+            this.BtnSaveAdmin.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.BtnSaveAdmin.Location = new System.Drawing.Point(225, 237);
+            this.BtnSaveAdmin.Name = "BtnSaveAdmin";
+            this.BtnSaveAdmin.Size = new System.Drawing.Size(191, 61);
+            this.BtnSaveAdmin.TabIndex = 11;
+            this.BtnSaveAdmin.Text = "Save";
+            this.BtnSaveAdmin.UseVisualStyleBackColor = true;
+            // 
+            // InputAdminPassword
+            // 
+            this.InputAdminPassword.Location = new System.Drawing.Point(34, 166);
+            this.InputAdminPassword.Name = "InputAdminPassword";
+            this.InputAdminPassword.Size = new System.Drawing.Size(382, 39);
+            this.InputAdminPassword.TabIndex = 4;
+            this.InputAdminPassword.UseSystemPasswordChar = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.label11.Location = new System.Drawing.Point(27, 125);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(171, 38);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Password";
+            // 
+            // InputAdminUsername
+            // 
+            this.InputAdminUsername.Location = new System.Drawing.Point(34, 68);
+            this.InputAdminUsername.Name = "InputAdminUsername";
+            this.InputAdminUsername.Size = new System.Drawing.Size(382, 39);
+            this.InputAdminUsername.TabIndex = 1;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.label10.Location = new System.Drawing.Point(27, 27);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(177, 38);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Username";
             // 
             // button1
             // 
@@ -587,6 +678,8 @@
             this.TabReservasi.PerformLayout();
             this.TabPelanggan.ResumeLayout(false);
             this.TabPelanggan.PerformLayout();
+            this.TabAdmin.ResumeLayout(false);
+            this.TabAdmin.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -609,7 +702,7 @@
         private System.Windows.Forms.Button BtnSaveMeja;
         private System.Windows.Forms.Button BtnClearMeja;
         private System.Windows.Forms.Button BtnDelMeja;
-        private System.Windows.Forms.TextBox InputWaktuReservasi;
+        private System.Windows.Forms.DateTimePicker InputWaktuReservasi;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox InputMeja;
         private System.Windows.Forms.Label label4;
@@ -637,5 +730,13 @@
         private System.Windows.Forms.TextBox InputSearch;
         private System.Windows.Forms.Label LblSearch;
         private System.Windows.Forms.Button BtnSearch;
+        private System.Windows.Forms.TabPage TabAdmin;
+        private System.Windows.Forms.TextBox InputAdminUsername;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox InputAdminPassword;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button BtnSaveAdmin;
+        private System.Windows.Forms.Button BtnDelAdmin;
+        private System.Windows.Forms.Button BtnClearAdmin;
     }
 }

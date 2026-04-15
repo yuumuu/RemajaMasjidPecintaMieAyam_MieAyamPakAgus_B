@@ -1,4 +1,4 @@
-﻿namespace MieAyamPakAgus
+namespace MieAyamPakAgus
 {
     partial class Login
     {
@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.InputUsername = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.InputPassword = new System.Windows.Forms.TextBox();
             this.BtnLogin = new System.Windows.Forms.Button();
             this.ChkShowPassword = new System.Windows.Forms.CheckBox();
             this.BtnModalSuperAdmin = new System.Windows.Forms.Button();
@@ -79,16 +79,17 @@
             this.InputUsername.Size = new System.Drawing.Size(640, 46);
             this.InputUsername.TabIndex = 3;
             // 
-            // textBox1
+            // InputPassword
             // 
-            this.textBox1.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(585, 574);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(10);
-            this.textBox1.MaximumSize = new System.Drawing.Size(640, 55);
-            this.textBox1.MinimumSize = new System.Drawing.Size(640, 55);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(640, 46);
-            this.textBox1.TabIndex = 4;
+            this.InputPassword.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InputPassword.Location = new System.Drawing.Point(585, 574);
+            this.InputPassword.Margin = new System.Windows.Forms.Padding(10);
+            this.InputPassword.MaximumSize = new System.Drawing.Size(640, 55);
+            this.InputPassword.MinimumSize = new System.Drawing.Size(640, 55);
+            this.InputPassword.Name = "InputPassword";
+            this.InputPassword.Size = new System.Drawing.Size(640, 46);
+            this.InputPassword.TabIndex = 4;
+            this.InputPassword.UseSystemPasswordChar = true;
             // 
             // BtnLogin
             // 
@@ -99,6 +100,7 @@
             this.BtnLogin.TabIndex = 5;
             this.BtnLogin.Text = "Login";
             this.BtnLogin.UseVisualStyleBackColor = true;
+            this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // ChkShowPassword
             // 
@@ -110,10 +112,10 @@
             this.ChkShowPassword.TabIndex = 6;
             this.ChkShowPassword.Text = "Show Password";
             this.ChkShowPassword.UseVisualStyleBackColor = true;
+            this.ChkShowPassword.CheckedChanged += new System.EventHandler(this.ChkShowPassword_CheckedChanged);
             // 
             // BtnModalSuperAdmin
             // 
-            this.BtnModalSuperAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnModalSuperAdmin.BackColor = System.Drawing.SystemColors.Highlight;
             this.BtnModalSuperAdmin.Font = new System.Drawing.Font("Bricolage Grotesque 14pt Medium", 9F, System.Drawing.FontStyle.Bold);
             this.BtnModalSuperAdmin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -123,6 +125,7 @@
             this.BtnModalSuperAdmin.TabIndex = 7;
             this.BtnModalSuperAdmin.Text = "Super Admin Mode";
             this.BtnModalSuperAdmin.UseVisualStyleBackColor = false;
+            this.BtnModalSuperAdmin.Click += new System.EventHandler(this.BtnModalSuperAdmin_Click);
             // 
             // Login
             // 
@@ -133,7 +136,7 @@
             this.Controls.Add(this.BtnModalSuperAdmin);
             this.Controls.Add(this.ChkShowPassword);
             this.Controls.Add(this.BtnLogin);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.InputPassword);
             this.Controls.Add(this.InputUsername);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -152,7 +155,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox InputUsername;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox InputPassword;
         private System.Windows.Forms.Button BtnLogin;
         private System.Windows.Forms.CheckBox ChkShowPassword;
         private System.Windows.Forms.Button BtnModalSuperAdmin;
