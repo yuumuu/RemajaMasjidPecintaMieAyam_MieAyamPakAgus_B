@@ -8,64 +8,63 @@ namespace MieAyamPakAgus.DAL
     {
         private readonly DBHelper _db = new DBHelper();
 
+        public bool Login(string username, string password, out int id)
+        {
+            id = 0;
+            SqlParameter[] param = {
+                new SqlParameter("@username", username),
+                new SqlParameter("@password", password)
+            };
+
+            DataTable dt = _db.ExecuteDataTable("sp_LoginAdmin", param);
+            if (dt.Rows.Count > 0)
+            {
+                id = (int)dt.Rows[0]["id_user"];
+                return true;
+            }
+            return false;
+        }
+
         public DataTable GetAll()
         {
             return _db.ExecuteDataTable("SELECT * FROM vw_DataAdmin");
         }
 
-        public int Insert(Admin admin)
+        public int Insert(Admin a)
         {
-            SqlParameter[] p = {
-                new SqlParameter("@username", admin.username),
-                new SqlParameter("@password", admin.password)
+            SqlParameter[] param = {
+                new SqlParameter("@username", a.username),
+                new SqlParameter("@password", a.password)
             };
-            return _db.ExecuteNonQuery("sp_TambahAdmin", p);
+            return _db.ExecuteNonQuery("sp_TambahAdmin", param);
         }
 
-        public int Update(Admin admin)
+        public int Update(Admin a)
         {
-            SqlParameter[] p = {
-                new SqlParameter("@id_user", admin.id_user),
-                new SqlParameter("@username", admin.username),
-                new SqlParameter("@password", admin.password)
+            SqlParameter[] param = {
+                new SqlParameter("@id_user", a.id_user),
+                new SqlParameter("@username", a.username),
+                new SqlParameter("@password", a.password)
             };
-            return _db.ExecuteNonQuery("sp_UpdateAdmin", p);
+            return _db.ExecuteNonQuery("sp_UpdateAdmin", param);
         }
 
-        public int Delete(int id_user)
+        public int Delete(int id)
         {
-            SqlParameter[] p = {
-                new SqlParameter("@id_user", id_user)
+            SqlParameter[] param = {
+                new SqlParameter("@id_user", id)
             };
-            return _db.ExecuteNonQuery("sp_DeleteAdmin", p);
+            return _db.ExecuteNonQuery("sp_DeleteAdmin", param);
         }
 
         public DataTable Search(string keyword)
         {
-            SqlParameter[] p = {
+            SqlParameter[] param = {
                 new SqlParameter("@keyword", keyword)
             };
-            return _db.ExecuteDataTable("sp_SearchAdmin", p);
+            return _db.ExecuteDataTable("sp_SearchAdmin", param);
         }
 
-        public DataTable Login(string username, string password)
-        {
-            string query = "SELECT id_user, username FROM Admin WHERE username = @u AND password = @p";
-            using (SqlConnection conn = _db.GetConnection())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@u", username);
-                    cmd.Parameters.AddWithValue("@p", password);
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                    {
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        return dt;
-                    }
-                }
-            }
-        }
         public int GetCount()
         {
             return (int)_db.ExecuteOutputParameter("sp_CountAdmin", "@Total");

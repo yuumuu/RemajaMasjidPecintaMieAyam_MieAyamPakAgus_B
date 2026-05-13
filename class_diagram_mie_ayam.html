@@ -1,0 +1,124 @@
+
+<style>
+#cd { padding: 8px 0; }
+#cd svg { max-width: 100%; }
+.mermaid-label { font-family: "Anthropic Sans", sans-serif !important; }
+</style>
+<div id="cd"></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#3C3489' : '#EEEDFE',
+    primaryTextColor: dark ? '#CECBF6' : '#26215C',
+    primaryBorderColor: dark ? '#534AB7' : '#7F77DD',
+    secondaryColor: dark ? '#085041' : '#E1F5EE',
+    secondaryTextColor: dark ? '#9FE1CB' : '#04342C',
+    tertiaryColor: dark ? '#444441' : '#F1EFE8',
+    tertiaryTextColor: dark ? '#D3D1C7' : '#2C2C2A',
+  },
+});
+
+const diagram = `classDiagram
+  class Admin {
+    +int id_user
+    +string username
+    +string password
+    +TambahAdmin(username, password)
+    +UpdateAdmin(id_user, username, password)
+    +DeleteAdmin(id_user)
+    +SearchAdmin(keyword)
+  }
+
+  class Pelanggan {
+    +int id_pelanggan
+    +string nama
+    +string no_telepon
+    +TambahPelanggan(nama, no_telepon)
+    +UpdatePelanggan(id_pelanggan, nama, no_telepon)
+    +DeletePelanggan(id_pelanggan)
+    +SearchPelanggan(keyword)
+  }
+
+  class Meja {
+    +int id_meja
+    +string kode
+    +int kapasitas
+    +string status_meja
+    +TambahMeja(kode, kapasitas)
+    +UpdateStatusMeja(id_meja, status_meja)
+    +DeleteMeja(id_meja)
+    +SearchMeja(keyword)
+  }
+
+  class Reservasi {
+    +int id_reservasi
+    +int id_pelanggan
+    +int id_meja
+    +int id_user
+    +DateTime waktu_kedatangan
+    +int jumlah_orang
+    +string bukti_transaksi
+    +DateTime created_at
+    +TambahReservasi(...)
+    +UpdateReservasi(...)
+    +DeleteReservasi(id_reservasi)
+    +SearchReservasi(keyword)
+  }
+
+  class vw_DataAdmin {
+    <<view>>
+    +int id_user
+    +string username
+  }
+
+  class vw_DataPelanggan {
+    <<view>>
+    +int id_pelanggan
+    +string nama
+    +string no_telepon
+  }
+
+  class vw_DataMeja {
+    <<view>>
+    +int id_meja
+    +string kode
+    +int kapasitas
+    +string status_meja
+  }
+
+  class vw_DataReservasi {
+    <<view>>
+    +int id_reservasi
+    +string nama_pelanggan
+    +string kode_meja
+    +string admin
+    +DateTime waktu_kedatangan
+    +int jumlah_orang
+    +string bukti_transaksi
+    +DateTime created_at
+  }
+
+  Admin "1" --> "0..*" Reservasi : mengelola (id_user)
+  Pelanggan "1" --> "0..*" Reservasi : melakukan (id_pelanggan)
+  Meja "1" --> "0..*" Reservasi : digunakan (id_meja)
+
+  Admin ..> vw_DataAdmin : sumber
+  Pelanggan ..> vw_DataPelanggan : sumber
+  Meja ..> vw_DataMeja : sumber
+  Reservasi ..> vw_DataReservasi : join view
+`;
+
+const { svg } = await mermaid.render('cd-svg', diagram);
+document.getElementById('cd').innerHTML = svg;
+</script>

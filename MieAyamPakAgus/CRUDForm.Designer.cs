@@ -36,14 +36,6 @@ namespace MieAyamPakAgus
             this.LogoApp = new System.Windows.Forms.ImageList(this.components);
             this.TabMenu = new System.Windows.Forms.TabControl();
             this.TabMeja = new System.Windows.Forms.TabPage();
-            this.TabAdmin = new System.Windows.Forms.TabPage();
-            this.BtnClearAdmin = new System.Windows.Forms.Button();
-            this.BtnDelAdmin = new System.Windows.Forms.Button();
-            this.BtnSaveAdmin = new System.Windows.Forms.Button();
-            this.InputAdminPassword = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.InputAdminUsername = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.BtnClearMeja = new System.Windows.Forms.Button();
             this.BtnDelMeja = new System.Windows.Forms.Button();
             this.BtnSaveMeja = new System.Windows.Forms.Button();
@@ -78,6 +70,14 @@ namespace MieAyamPakAgus
             this.LblNoTelepon = new System.Windows.Forms.Label();
             this.InputNamaPelanggan = new System.Windows.Forms.TextBox();
             this.LblNamaPelanggan = new System.Windows.Forms.Label();
+            this.TabAdmin = new System.Windows.Forms.TabPage();
+            this.BtnClearAdmin = new System.Windows.Forms.Button();
+            this.BtnDelAdmin = new System.Windows.Forms.Button();
+            this.BtnSaveAdmin = new System.Windows.Forms.Button();
+            this.InputAdminPassword = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.InputAdminUsername = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.BuktiTransferDialog = new System.Windows.Forms.OpenFileDialog();
             this.InputSearch = new System.Windows.Forms.TextBox();
             this.LblSearch = new System.Windows.Forms.Label();
@@ -87,6 +87,7 @@ namespace MieAyamPakAgus
             this.TabMeja.SuspendLayout();
             this.TabReservasi.SuspendLayout();
             this.TabPelanggan.SuspendLayout();
+            this.TabAdmin.SuspendLayout();
             this.SuspendLayout();
             // 
             // LblTitlePage
@@ -206,7 +207,7 @@ namespace MieAyamPakAgus
             this.InputKapasitasMeja.MaximumSize = new System.Drawing.Size(382, 42);
             this.InputKapasitasMeja.MinimumSize = new System.Drawing.Size(382, 42);
             this.InputKapasitasMeja.Name = "InputKapasitasMeja";
-            this.InputKapasitasMeja.Size = new System.Drawing.Size(382, 39);
+            this.InputKapasitasMeja.Size = new System.Drawing.Size(382, 42);
             this.InputKapasitasMeja.TabIndex = 5;
             // 
             // label3
@@ -248,7 +249,7 @@ namespace MieAyamPakAgus
             this.InputKodeMeja.MaximumSize = new System.Drawing.Size(382, 42);
             this.InputKodeMeja.MinimumSize = new System.Drawing.Size(382, 42);
             this.InputKodeMeja.Name = "InputKodeMeja";
-            this.InputKodeMeja.Size = new System.Drawing.Size(382, 39);
+            this.InputKodeMeja.Size = new System.Drawing.Size(382, 42);
             this.InputKodeMeja.TabIndex = 1;
             // 
             // label1
@@ -282,7 +283,7 @@ namespace MieAyamPakAgus
             this.TabReservasi.Location = new System.Drawing.Point(8, 58);
             this.TabReservasi.Name = "TabReservasi";
             this.TabReservasi.Padding = new System.Windows.Forms.Padding(3);
-            this.TabReservasi.Size = new System.Drawing.Size(443, 867);
+            this.TabReservasi.Size = new System.Drawing.Size(472, 867);
             this.TabReservasi.TabIndex = 1;
             this.TabReservasi.Text = "Reservasi";
             this.TabReservasi.UseVisualStyleBackColor = true;
@@ -293,7 +294,7 @@ namespace MieAyamPakAgus
             this.InputCepatTeleponPelanggan.MaximumSize = new System.Drawing.Size(382, 42);
             this.InputCepatTeleponPelanggan.MinimumSize = new System.Drawing.Size(382, 42);
             this.InputCepatTeleponPelanggan.Name = "InputCepatTeleponPelanggan";
-            this.InputCepatTeleponPelanggan.Size = new System.Drawing.Size(382, 39);
+            this.InputCepatTeleponPelanggan.Size = new System.Drawing.Size(382, 42);
             this.InputCepatTeleponPelanggan.TabIndex = 18;
             // 
             // label9
@@ -360,7 +361,7 @@ namespace MieAyamPakAgus
             this.InputBuktiReservasi.MaximumSize = new System.Drawing.Size(382, 42);
             this.InputBuktiReservasi.MinimumSize = new System.Drawing.Size(250, 42);
             this.InputBuktiReservasi.Name = "InputBuktiReservasi";
-            this.InputBuktiReservasi.Size = new System.Drawing.Size(250, 39);
+            this.InputBuktiReservasi.Size = new System.Drawing.Size(250, 42);
             this.InputBuktiReservasi.TabIndex = 9;
             // 
             // label8
@@ -379,7 +380,7 @@ namespace MieAyamPakAgus
             this.InputJumlahOrangReservasi.MaximumSize = new System.Drawing.Size(382, 42);
             this.InputJumlahOrangReservasi.MinimumSize = new System.Drawing.Size(382, 42);
             this.InputJumlahOrangReservasi.Name = "InputJumlahOrangReservasi";
-            this.InputJumlahOrangReservasi.Size = new System.Drawing.Size(382, 39);
+            this.InputJumlahOrangReservasi.Size = new System.Drawing.Size(382, 42);
             this.InputJumlahOrangReservasi.TabIndex = 7;
             // 
             // label7
@@ -430,12 +431,12 @@ namespace MieAyamPakAgus
             // 
             // InputWaktuReservasi
             // 
+            this.InputWaktuReservasi.CustomFormat = "yyyy-MM-dd HH:mm";
+            this.InputWaktuReservasi.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.InputWaktuReservasi.Location = new System.Drawing.Point(29, 359);
             this.InputWaktuReservasi.Name = "InputWaktuReservasi";
             this.InputWaktuReservasi.Size = new System.Drawing.Size(382, 39);
             this.InputWaktuReservasi.TabIndex = 1;
-            this.InputWaktuReservasi.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.InputWaktuReservasi.CustomFormat = "yyyy-MM-dd HH:mm";
             // 
             // label4
             // 
@@ -459,10 +460,84 @@ namespace MieAyamPakAgus
             this.TabPelanggan.Location = new System.Drawing.Point(8, 58);
             this.TabPelanggan.Name = "TabPelanggan";
             this.TabPelanggan.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPelanggan.Size = new System.Drawing.Size(443, 867);
+            this.TabPelanggan.Size = new System.Drawing.Size(472, 867);
             this.TabPelanggan.TabIndex = 2;
             this.TabPelanggan.Text = "Pelanggan";
             this.TabPelanggan.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.button1.Location = new System.Drawing.Point(231, 777);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(185, 61);
+            this.button1.TabIndex = 25;
+            this.button1.Text = "Clear";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.button2.Location = new System.Drawing.Point(34, 777);
+            this.button2.Margin = new System.Windows.Forms.Padding(0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(185, 61);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "Delete";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // BtnSavePelanggan
+            // 
+            this.BtnSavePelanggan.BackColor = System.Drawing.Color.White;
+            this.BtnSavePelanggan.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.BtnSavePelanggan.Location = new System.Drawing.Point(225, 237);
+            this.BtnSavePelanggan.Margin = new System.Windows.Forms.Padding(0);
+            this.BtnSavePelanggan.Name = "BtnSavePelanggan";
+            this.BtnSavePelanggan.Size = new System.Drawing.Size(191, 61);
+            this.BtnSavePelanggan.TabIndex = 23;
+            this.BtnSavePelanggan.Text = "Save";
+            this.BtnSavePelanggan.UseVisualStyleBackColor = false;
+            // 
+            // InputTeleponPelanggan
+            // 
+            this.InputTeleponPelanggan.Location = new System.Drawing.Point(34, 166);
+            this.InputTeleponPelanggan.MaximumSize = new System.Drawing.Size(382, 42);
+            this.InputTeleponPelanggan.MinimumSize = new System.Drawing.Size(382, 42);
+            this.InputTeleponPelanggan.Name = "InputTeleponPelanggan";
+            this.InputTeleponPelanggan.Size = new System.Drawing.Size(382, 42);
+            this.InputTeleponPelanggan.TabIndex = 22;
+            // 
+            // LblNoTelepon
+            // 
+            this.LblNoTelepon.AutoSize = true;
+            this.LblNoTelepon.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.LblNoTelepon.Location = new System.Drawing.Point(27, 125);
+            this.LblNoTelepon.Name = "LblNoTelepon";
+            this.LblNoTelepon.Size = new System.Drawing.Size(188, 38);
+            this.LblNoTelepon.TabIndex = 21;
+            this.LblNoTelepon.Text = "Nomor Telepon";
+            // 
+            // InputNamaPelanggan
+            // 
+            this.InputNamaPelanggan.Location = new System.Drawing.Point(34, 68);
+            this.InputNamaPelanggan.MaximumSize = new System.Drawing.Size(382, 42);
+            this.InputNamaPelanggan.MinimumSize = new System.Drawing.Size(382, 42);
+            this.InputNamaPelanggan.Name = "InputNamaPelanggan";
+            this.InputNamaPelanggan.Size = new System.Drawing.Size(382, 42);
+            this.InputNamaPelanggan.TabIndex = 20;
+            // 
+            // LblNamaPelanggan
+            // 
+            this.LblNamaPelanggan.AutoSize = true;
+            this.LblNamaPelanggan.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
+            this.LblNamaPelanggan.Location = new System.Drawing.Point(27, 27);
+            this.LblNamaPelanggan.Name = "LblNamaPelanggan";
+            this.LblNamaPelanggan.Size = new System.Drawing.Size(205, 38);
+            this.LblNamaPelanggan.TabIndex = 19;
+            this.LblNamaPelanggan.Text = "Nama Pelanggan";
             // 
             // TabAdmin
             // 
@@ -476,7 +551,7 @@ namespace MieAyamPakAgus
             this.TabAdmin.Location = new System.Drawing.Point(8, 58);
             this.TabAdmin.Name = "TabAdmin";
             this.TabAdmin.Padding = new System.Windows.Forms.Padding(3);
-            this.TabAdmin.Size = new System.Drawing.Size(443, 867);
+            this.TabAdmin.Size = new System.Drawing.Size(472, 867);
             this.TabAdmin.TabIndex = 3;
             this.TabAdmin.Text = "Admin";
             this.TabAdmin.UseVisualStyleBackColor = true;
@@ -523,9 +598,9 @@ namespace MieAyamPakAgus
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.label11.Location = new System.Drawing.Point(27, 125);
+            this.label11.Location = new System.Drawing.Point(30, 128);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(171, 38);
+            this.label11.Size = new System.Drawing.Size(128, 38);
             this.label11.TabIndex = 3;
             this.label11.Text = "Password";
             // 
@@ -540,85 +615,11 @@ namespace MieAyamPakAgus
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.label10.Location = new System.Drawing.Point(27, 27);
+            this.label10.Location = new System.Drawing.Point(30, 30);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(177, 38);
+            this.label10.Size = new System.Drawing.Size(133, 38);
             this.label10.TabIndex = 0;
             this.label10.Text = "Username";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.button1.Location = new System.Drawing.Point(231, 777);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(185, 61);
-            this.button1.TabIndex = 25;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.button2.Location = new System.Drawing.Point(34, 777);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(185, 61);
-            this.button2.TabIndex = 24;
-            this.button2.Text = "Delete";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // BtnSavePelanggan
-            // 
-            this.BtnSavePelanggan.BackColor = System.Drawing.Color.White;
-            this.BtnSavePelanggan.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.BtnSavePelanggan.Location = new System.Drawing.Point(225, 237);
-            this.BtnSavePelanggan.Margin = new System.Windows.Forms.Padding(0);
-            this.BtnSavePelanggan.Name = "BtnSavePelanggan";
-            this.BtnSavePelanggan.Size = new System.Drawing.Size(191, 61);
-            this.BtnSavePelanggan.TabIndex = 23;
-            this.BtnSavePelanggan.Text = "Save";
-            this.BtnSavePelanggan.UseVisualStyleBackColor = false;
-            // 
-            // InputTeleponPelanggan
-            // 
-            this.InputTeleponPelanggan.Location = new System.Drawing.Point(34, 166);
-            this.InputTeleponPelanggan.MaximumSize = new System.Drawing.Size(382, 42);
-            this.InputTeleponPelanggan.MinimumSize = new System.Drawing.Size(382, 42);
-            this.InputTeleponPelanggan.Name = "InputTeleponPelanggan";
-            this.InputTeleponPelanggan.Size = new System.Drawing.Size(382, 39);
-            this.InputTeleponPelanggan.TabIndex = 22;
-            // 
-            // LblNoTelepon
-            // 
-            this.LblNoTelepon.AutoSize = true;
-            this.LblNoTelepon.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.LblNoTelepon.Location = new System.Drawing.Point(27, 125);
-            this.LblNoTelepon.Name = "LblNoTelepon";
-            this.LblNoTelepon.Size = new System.Drawing.Size(188, 38);
-            this.LblNoTelepon.TabIndex = 21;
-            this.LblNoTelepon.Text = "Nomor Telepon";
-            // 
-            // InputNamaPelanggan
-            // 
-            this.InputNamaPelanggan.Location = new System.Drawing.Point(34, 68);
-            this.InputNamaPelanggan.MaximumSize = new System.Drawing.Size(382, 42);
-            this.InputNamaPelanggan.MinimumSize = new System.Drawing.Size(382, 42);
-            this.InputNamaPelanggan.Name = "InputNamaPelanggan";
-            this.InputNamaPelanggan.Size = new System.Drawing.Size(382, 39);
-            this.InputNamaPelanggan.TabIndex = 20;
-            // 
-            // LblNamaPelanggan
-            // 
-            this.LblNamaPelanggan.AutoSize = true;
-            this.LblNamaPelanggan.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F);
-            this.LblNamaPelanggan.Location = new System.Drawing.Point(27, 27);
-            this.LblNamaPelanggan.Name = "LblNamaPelanggan";
-            this.LblNamaPelanggan.Size = new System.Drawing.Size(205, 38);
-            this.LblNamaPelanggan.TabIndex = 19;
-            this.LblNamaPelanggan.Text = "Nama Pelanggan";
             // 
             // BuktiTransferDialog
             // 
@@ -631,7 +632,7 @@ namespace MieAyamPakAgus
             this.InputSearch.MaximumSize = new System.Drawing.Size(382, 42);
             this.InputSearch.MinimumSize = new System.Drawing.Size(382, 42);
             this.InputSearch.Name = "InputSearch";
-            this.InputSearch.Size = new System.Drawing.Size(382, 42);
+            this.InputSearch.Size = new System.Drawing.Size(382, 35);
             this.InputSearch.TabIndex = 24;
             // 
             // LblSearch

@@ -11,8 +11,7 @@ namespace MieAyamPakAgus.DAL
         public DataTable GetAll()
         {
             return _db.ExecuteDataTable("SELECT * FROM vw_DataPelanggan");
-            public int GetCount() { return (int)_db.ExecuteOutputParameter(" sp_CountPelanggan\, \@Total\); }
- }
+        }
 
         public int Insert(Pelanggan p)
         {
@@ -21,8 +20,7 @@ namespace MieAyamPakAgus.DAL
                 new SqlParameter("@no_telepon", p.no_telepon)
             };
             return _db.ExecuteNonQuery("sp_TambahPelanggan", param);
-            public int GetCount() { return (int)_db.ExecuteOutputParameter(" sp_CountPelanggan\, \@Total\); }
- }
+        }
 
         public int Update(Pelanggan p)
         {
@@ -32,8 +30,7 @@ namespace MieAyamPakAgus.DAL
                 new SqlParameter("@no_telepon", p.no_telepon)
             };
             return _db.ExecuteNonQuery("sp_UpdatePelanggan", param);
-            public int GetCount() { return (int)_db.ExecuteOutputParameter(" sp_CountPelanggan\, \@Total\); }
- }
+        }
 
         public int Delete(int id)
         {
@@ -41,8 +38,7 @@ namespace MieAyamPakAgus.DAL
                 new SqlParameter("@id_pelanggan", id)
             };
             return _db.ExecuteNonQuery("sp_DeletePelanggan", param);
-            public int GetCount() { return (int)_db.ExecuteOutputParameter(" sp_CountPelanggan\, \@Total\); }
- }
+        }
 
         public DataTable Search(string keyword)
         {
@@ -50,8 +46,11 @@ namespace MieAyamPakAgus.DAL
                 new SqlParameter("@keyword", keyword)
             };
             return _db.ExecuteDataTable("sp_SearchPelanggan", param);
-            public int GetCount() { return (int)_db.ExecuteOutputParameter(" sp_CountPelanggan\, \@Total\); }
- }
-        public int GetCount() { return (int)_db.ExecuteOutputParameter(" sp_CountPelanggan\, \@Total\); }
- }
+        }
+
+        public int GetCount()
+        {
+            return (int)_db.ExecuteOutputParameter("sp_CountPelanggan", "@Total");
+        }
+    }
 }

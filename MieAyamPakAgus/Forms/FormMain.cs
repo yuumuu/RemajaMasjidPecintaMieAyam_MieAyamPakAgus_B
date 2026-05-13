@@ -30,12 +30,6 @@ namespace MieAyamPakAgus.Forms
             ShowForm(new FormReservasi());
         }
 
-        private void menuLogout_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            Application.Restart();
-        }
-
         private void ShowForm(Form frm)
         {
             foreach (Form f in this.MdiChildren)
