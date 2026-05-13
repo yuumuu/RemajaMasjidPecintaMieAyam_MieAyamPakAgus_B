@@ -38,6 +38,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -47,6 +48,56 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\AdminBLL.cs" />
+    <Compile Include="BLL\MejaBLL.cs" />
+    <Compile Include="BLL\PelangganBLL.cs" />
+    <Compile Include="BLL\ReservasiBLL.cs" />
+    <Compile Include="DAL\AdminDAL.cs" />
+    <Compile Include="DAL\DBHelper.cs" />
+    <Compile Include="DAL\MejaDAL.cs" />
+    <Compile Include="DAL\PelangganDAL.cs" />
+    <Compile Include="DAL\ReservasiDAL.cs" />
+    <Compile Include="Forms\FormAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAdmin.Designer.cs">
+      <DependentUpon>FormAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMeja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMeja.Designer.cs">
+      <DependentUpon>FormMeja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPelanggan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPelanggan.Designer.cs">
+      <DependentUpon>FormPelanggan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormReservasi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormReservasi.Designer.cs">
+      <DependentUpon>FormReservasi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Meja.cs" />
+    <Compile Include="Models\Pelanggan.cs" />
+    <Compile Include="Models\Reservasi.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="DBConfig.cs" />
     <Compile Include="CRUDForm.cs">
       <SubType>Form</SubType>
