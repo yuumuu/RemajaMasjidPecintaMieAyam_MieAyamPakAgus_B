@@ -3,8 +3,8 @@ CREATE DATABASE MieAyamPakAgus;
 USE	MieAyamPakAgus;
 
 -- TABEL ADMIN--
-CREATE TABLE Admin (
-	id_user INT PRIMARY KEY IDENTITY(1,1),
+CREATE TABLE Kasir (
+	id_kasir INT PRIMARY KEY IDENTITY(1,1),
 	username VARCHAR(100) NOT NULL UNIQUE,
 	password VARCHAR(100) NOT NULL
 );
@@ -30,7 +30,7 @@ CREATE TABLE Reservasi (
     id_reservasi      INT           PRIMARY KEY    IDENTITY(1,1),
     id_pelanggan      INT           NOT NULL,
     id_meja           INT           NOT NULL,
-    id_user           INT           NOT NULL,
+    id_kasir          INT           NOT NULL,
     waktu_kedatangan  DATETIME      NOT NULL,
     jumlah_orang      INT           NOT NULL,
     bukti_transaksi   VARCHAR(255)  NULL,
@@ -46,3 +46,6 @@ INSERT INTO Admin(username, password) VALUES
 	('Agus', 'Admin123');
 
 SELECT * FROM Admin;
+SELECT * FROM Pelanggan;
+SELECT * FROM Meja;
+SELECT * FROM Reservasi;
