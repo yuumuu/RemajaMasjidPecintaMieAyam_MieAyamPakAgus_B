@@ -82,6 +82,7 @@ namespace MieAyamPakAgus
             this.InputSearch = new System.Windows.Forms.TextBox();
             this.LblSearch = new System.Windows.Forms.Label();
             this.BtnSearch = new System.Windows.Forms.Button();
+            this.BtnLogout = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataTable)).BeginInit();
             this.TabMenu.SuspendLayout();
             this.TabMeja.SuspendLayout();
@@ -657,11 +658,25 @@ namespace MieAyamPakAgus
             this.BtnSearch.Text = "Search";
             this.BtnSearch.UseVisualStyleBackColor = false;
             // 
+            // BtnLogout
+            // 
+            this.BtnLogout.BackColor = System.Drawing.Color.IndianRed;
+            this.BtnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnLogout.Font = new System.Drawing.Font("Bricolage Grotesque 14pt", 9F, System.Drawing.FontStyle.Bold);
+            this.BtnLogout.ForeColor = System.Drawing.Color.White;
+            this.BtnLogout.Location = new System.Drawing.Point(1560, 55);
+            this.BtnLogout.Name = "BtnLogout";
+            this.BtnLogout.Size = new System.Drawing.Size(191, 55);
+            this.BtnLogout.TabIndex = 27;
+            this.BtnLogout.Text = "LOGOUT";
+            this.BtnLogout.UseVisualStyleBackColor = false;
+            // 
             // CRUDForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1814, 1129);
+            this.Controls.Add(this.BtnLogout);
             this.Controls.Add(this.BtnSearch);
             this.Controls.Add(this.InputSearch);
             this.Controls.Add(this.LblSearch);
@@ -739,5 +754,6 @@ namespace MieAyamPakAgus
         private System.Windows.Forms.Button BtnSaveAdmin;
         private System.Windows.Forms.Button BtnDelAdmin;
         private System.Windows.Forms.Button BtnClearAdmin;
+        private System.Windows.Forms.Button BtnLogout;
     }
 }

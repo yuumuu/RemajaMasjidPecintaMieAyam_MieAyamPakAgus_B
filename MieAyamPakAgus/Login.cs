@@ -2,12 +2,14 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using MieAyamPakAgus.BLL;
 
 namespace MieAyamPakAgus
 {
     public partial class Login : Form
     {
         private const string SuperAdminPin = "123456";
+        private readonly AdminBLL _adminBll = new AdminBLL();
 
         public Login()
         {
@@ -25,31 +27,27 @@ namespace MieAyamPakAgus
                 return;
             }
 
-            string query = "SELECT id_user FROM Admin WHERE username = @user AND password = @pass";
-            SqlParameter[] parameters = {
-                new SqlParameter("@user", username),
-                new SqlParameter("@pass", password)
-            };
-
-            DataTable dt = DBConfig.ExecuteQuery(query, parameters);
-
-            if (dt != null && dt.Rows.Count > 0)
+            try
             {
-                int userId = Convert.ToInt32(dt.Rows[0]["id_user"]);
-                this.Hide();
-                CRUDForm mainForm = new CRUDForm(userId, false);
-                mainForm.ShowDialog();
-                this.Close();
+                if (_adminBll.Login(username, password))
+                {
+                    this.Hide();
+                    CRUDForm mainForm = new CRUDForm();
+                    mainForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Username atau Password salah!", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Username atau Password salah!", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ChkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            // Toggle visibilitas password
             InputPassword.UseSystemPasswordChar = !ChkShowPassword.Checked;
         }
 
@@ -59,11 +57,12 @@ namespace MieAyamPakAgus
 
             if (pin == SuperAdminPin)
             {
-                MessageBox.Show("Mode Super Admin Aktif!", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Session.IsSuperadmin = true;
+                Session.Username = "SUPERADMIN";
+                Session.IdUser = 0;
                 this.Hide();
-                CRUDForm mainForm = new CRUDForm(0, true);
-                mainForm.ShowDialog();
-                this.Close();
+                CRUDForm mainForm = new CRUDForm();
+                mainForm.Show();
             }
             else if (!string.IsNullOrEmpty(pin))
             {
@@ -73,11 +72,7 @@ namespace MieAyamPakAgus
 
         private void Login_Load(object sender, EventArgs e)
         {
-            if (!DBConfig.TestConnection())
-            {
-                MessageBox.Show("Gagal terhubung ke database. Periksa konfigurasi koneksi.", "Koneksi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Connection test removed to rely on DBHelper
         }
     }
 }
-

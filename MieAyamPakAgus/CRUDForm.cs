@@ -1,69 +1,110 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
-using System.IO;
+using MieAyamPakAgus.BLL;
+using MieAyamPakAgus.Models;
 
 namespace MieAyamPakAgus
 {
     public partial class CRUDForm : Form
     {
-        // bismillah final fix kelar
-        private int currentUserId;
-        private bool isSuperAdmin;
-        private string selectedId = "";
+        // 3-Layer BLL instances
+        private readonly AdminBLL _adminBll = new AdminBLL();
+        private readonly PelangganBLL _pelangganBll = new PelangganBLL();
+        private readonly MejaBLL _mejaBll = new MejaBLL();
+        private readonly ReservasiBLL _reservasiBll = new ReservasiBLL();
 
-        public CRUDForm(int userId, bool superAdmin)
+        // BindingSources for each tab
+        private BindingSource _bsAdmin = new BindingSource();
+        private BindingSource _bsPelanggan = new BindingSource();
+        private BindingSource _bsMeja = new BindingSource();
+        private BindingSource _bsReservasi = new BindingSource();
+
+
+        public CRUDForm()
         {
             InitializeComponent();
-            this.currentUserId = userId;
-            this.isSuperAdmin = superAdmin;
             
-            SetupSuperAdmin();
+            // Wire up Logout
+            this.FormClosing += (s, e) => {
+                if (MessageBox.Show("Yakin ingin keluar?", "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.No)
+                    e.Cancel = true;
+            };
+
+            // Setup UI based on session
+            if (!Session.IsSuperadmin)
+            {
+                TabMenu.TabPages.Remove(TabAdmin);
+            }
+
             this.Load += CRUDForm_Load;
             this.TabMenu.SelectedIndexChanged += TabMenu_SelectedIndexChanged;
             
-            // Wire up event handlers (Meja)
-            this.BtnSaveMeja.Click += BtnSaveMeja_Click;
-            this.BtnDelMeja.Click += BtnDelMeja_Click;
-            this.BtnClearMeja.Click += BtnClearMeja_Click;
+            // Events
+            this.BtnSaveMeja.Click += (s, e) => SaveMeja();
+            this.BtnDelMeja.Click += (s, e) => DeleteMeja();
+            this.BtnClearMeja.Click += (s, e) => ClearForm();
+
+            this.BtnSavePelanggan.Click += (s, e) => SavePelanggan();
+            this.button2.Click += (s, e) => DeletePelanggan(); // button2 is Delete in Designer
+            this.button1.Click += (s, e) => ClearForm();   // button1 is Clear in Designer
+
+            this.BtnSaveAdmin.Click += (s, e) => SaveAdmin();
+            this.BtnDelAdmin.Click += (s, e) => DeleteAdmin();
+            this.BtnClearAdmin.Click += (s, e) => ClearForm();
+
+            this.BtnSaveReservasi.Click += (s, e) => SaveReservasi();
+            this.BtnDelReservasi.Click += (s, e) => DeleteReservasi();
+            this.BtnClearReservasi.Click += (s, e) => ClearForm();
+
+            this.BtnSearch.Click += (s, e) => SearchData();
+            this.BtnLogout.Click += (s, e) => {
+                if (MessageBox.Show("Yakin ingin Logout?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.Hide();
+                    new Login().Show();
+                }
+            };
             this.DataTable.CellClick += DataTable_CellClick;
-            this.BtnSearch.Click += BtnSearch_Click;
-
-            // Wire up Pelanggan
-            this.BtnSavePelanggan.Click += BtnSavePelanggan_Click;
-            this.button2.Click += BtnDelPelanggan_Click;
-            this.button1.Click += BtnClearPelanggan_Click;
-
-            // Wire up Admin
-            this.BtnSaveAdmin.Click += BtnSaveAdmin_Click;
-            this.BtnDelAdmin.Click += BtnDelAdmin_Click;
-            this.BtnClearAdmin.Click += BtnClearAdmin_Click;
-
-            // Wire up Reservasi
-            this.BtnSaveReservasi.Click += BtnSaveReservasi_Click;
-            this.BtnDelReservasi.Click += BtnDelReservasi_Click;
-            this.BtnClearReservasi.Click += BtnClearReservasi_Click;
-            this.BtnOpenFileDialog.Click += BtnOpenFileDialog_Click;
-            this.InputPelanggan.SelectedIndexChanged += InputPelanggan_SelectedIndexChanged;
-            this.InputPelanggan.TextChanged += InputPelanggan_TextChanged; 
-            this.InputMeja.SelectedIndexChanged += InputMeja_SelectedIndexChanged;
+            
+            this.BtnOpenFileDialog.Click += (s, e) => {
+                if (BuktiTransferDialog.ShowDialog() == DialogResult.OK)
+                    InputBuktiReservasi.Text = BuktiTransferDialog.FileName;
+            };
         }
 
         private void CRUDForm_Load(object sender, EventArgs e)
         {
+            // Initialize all DataSources to establish schema for Binding
+            _bsAdmin.DataSource = _adminBll.GetData();
+            _bsPelanggan.DataSource = _pelangganBll.GetData();
+            _bsMeja.DataSource = _mejaBll.GetData();
+            _bsReservasi.DataSource = _reservasiBll.GetData();
+
+            BindAll();
             UpdateTabContext();
         }
 
-        private void SetupSuperAdmin()
+        private void BindAll()
         {
-            if (!isSuperAdmin)
-            {
-                if (TabMenu.TabPages.Contains(TabAdmin))
-                {
-                    TabMenu.TabPages.Remove(TabAdmin);
-                }
-            }
+            // Bind Controls (PABD Style)
+            // Meja
+            InputKodeMeja.DataBindings.Add("Text", _bsMeja, "kode", true, DataSourceUpdateMode.OnPropertyChanged);
+            InputKapasitasMeja.DataBindings.Add("Text", _bsMeja, "kapasitas", true, DataSourceUpdateMode.OnPropertyChanged);
+            InputStatusReservasi.DataBindings.Add("Text", _bsMeja, "status_meja", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            // Pelanggan
+            InputNamaPelanggan.DataBindings.Add("Text", _bsPelanggan, "nama", true, DataSourceUpdateMode.OnPropertyChanged);
+            InputTeleponPelanggan.DataBindings.Add("Text", _bsPelanggan, "no_telepon", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            // Admin
+            InputAdminUsername.DataBindings.Add("Text", _bsAdmin, "username", true, DataSourceUpdateMode.OnPropertyChanged);
+            InputAdminPassword.DataBindings.Add("Text", _bsAdmin, "password", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            // Reservasi (Limited binding due to FK ComboBoxes)
+            InputJumlahOrangReservasi.DataBindings.Add("Text", _bsReservasi, "jumlah_orang", true, DataSourceUpdateMode.OnPropertyChanged);
+            InputBuktiReservasi.DataBindings.Add("Text", _bsReservasi, "bukti_transaksi", true, DataSourceUpdateMode.OnPropertyChanged);
+            InputWaktuReservasi.DataBindings.Add("Value", _bsReservasi, "waktu_kedatangan", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void TabMenu_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,433 +114,166 @@ namespace MieAyamPakAgus
 
         private void UpdateTabContext()
         {
-            selectedId = "";
             ClearForm();
-            
             switch (TabMenu.SelectedTab.Name)
             {
                 case "TabMeja":
                     LblTitlePage.Text = "Data Meja";
-                    LoadMeja();
+                    _bsMeja.DataSource = _mejaBll.GetData();
+                    DataTable.DataSource = _bsMeja;
                     break;
                 case "TabReservasi":
                     LblTitlePage.Text = "Data Reservasi";
-                    LoadMejaList();
-                    LoadPelangganList();
-                    LoadReservasi();
+                    LoadComboBoxes();
+                    _bsReservasi.DataSource = _reservasiBll.GetData();
+                    DataTable.DataSource = _bsReservasi;
                     break;
                 case "TabPelanggan":
                     LblTitlePage.Text = "Data Pelanggan";
-                    LoadPelanggan();
+                    _bsPelanggan.DataSource = _pelangganBll.GetData();
+                    DataTable.DataSource = _bsPelanggan;
                     break;
                 case "TabAdmin":
                     LblTitlePage.Text = "Data Admin";
-                    LoadAdmin();
+                    _bsAdmin.DataSource = _adminBll.GetData();
+                    DataTable.DataSource = _bsAdmin;
                     break;
             }
         }
 
-
-        private void LoadMeja()
+        private void LoadComboBoxes()
         {
-            DataTable dt = DBConfig.ExecuteQuery("SELECT id_meja, kode, kapasitas, status_meja FROM Meja");
-            DataTable.DataSource = dt;
-        }
+            InputMeja.DataSource = _mejaBll.GetData();
+            InputMeja.DisplayMember = "kode";
+            InputMeja.ValueMember = "id_meja";
 
-        private void BtnSaveMeja_Click(object sender, EventArgs e)
-        {
-            string kode = InputKodeMeja.Text.Trim();
-            string kapasitas = InputKapasitasMeja.Text.Trim();
-            string status = InputStatusReservasi.Text;
-
-            if (string.IsNullOrEmpty(kode) || string.IsNullOrEmpty(kapasitas)) {
-                MessageBox.Show("Semua field Meja harus diisi!");
-                return;
-            }
-
-            // Cek apakah kapasitas benar-benar angka
-            if (!int.TryParse(kapasitas, out _))
-            {
-                MessageBox.Show("Kapasitas harus berupa angka!");
-                return;
-            }
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@kode", kode),
-                new SqlParameter("@kapasitas", kapasitas),
-                new SqlParameter("@status", status)
-            };
-
-            if (string.IsNullOrEmpty(selectedId))
-            {
-                DBConfig.ExecuteNonQuery("INSERT INTO Meja (kode, kapasitas, status_meja) VALUES (@kode, @kapasitas, @status)", parameters);
-            }
-            else
-            {
-                SqlParameter[] updateParams = new SqlParameter[parameters.Length + 1];
-                parameters.CopyTo(updateParams, 0);
-                updateParams[parameters.Length] = new SqlParameter("@id", selectedId);
-                DBConfig.ExecuteNonQuery("UPDATE Meja SET kode=@kode, kapasitas=@kapasitas, status_meja=@status WHERE id_meja=@id", updateParams);
-            }
-            UpdateTabContext();
-        }
-
-        private void BtnDelMeja_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(selectedId)) return;
-            if (MessageBox.Show("Hapus data ini?", "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                SqlParameter[] parameters = { new SqlParameter("@id", selectedId) };
-                DBConfig.ExecuteNonQuery("DELETE FROM Meja WHERE id_meja=@id", parameters);
-                UpdateTabContext();
-            }
-        }
-
-        private void BtnClearMeja_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            selectedId = "";
-        }
-
-
-
-        private void LoadPelanggan()
-        {
-            DataTable dt = DBConfig.ExecuteQuery("SELECT * FROM Pelanggan");
-            DataTable.DataSource = dt;
-        }
-
-        private void BtnSavePelanggan_Click(object sender, EventArgs e)
-        {
-            string nama = InputNamaPelanggan.Text.Trim();
-            string telp = InputTeleponPelanggan.Text.Trim();
-
-            if (string.IsNullOrEmpty(nama) || string.IsNullOrEmpty(telp))
-            {
-                MessageBox.Show("Nama dan Telepon harus diisi!");
-                return;
-            }
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@nama", nama),
-                new SqlParameter("@telp", telp)
-            };
-
-            if (string.IsNullOrEmpty(selectedId))
-            {
-                DBConfig.ExecuteNonQuery("INSERT INTO Pelanggan (nama, no_telepon) VALUES (@nama, @telp)", parameters);
-            }
-            else
-            {
-                SqlParameter[] updateParams = new SqlParameter[parameters.Length + 1];
-                parameters.CopyTo(updateParams, 0);
-                updateParams[parameters.Length] = new SqlParameter("@id", selectedId);
-                DBConfig.ExecuteNonQuery("UPDATE Pelanggan SET nama=@nama, no_telepon=@telp WHERE id_pelanggan=@id", updateParams);
-            }
-            UpdateTabContext();
-        }
-
-        private void BtnDelPelanggan_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(selectedId)) return;
-            if (MessageBox.Show("Hapus pelanggan ini?", "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                SqlParameter[] parameters = { new SqlParameter("@id", selectedId) };
-                DBConfig.ExecuteNonQuery("DELETE FROM Pelanggan WHERE id_pelanggan=@id", parameters);
-                UpdateTabContext();
-            }
-        }
-
-        private void BtnClearPelanggan_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            selectedId = "";
-        }
-
-
-
-        private void LoadAdmin()
-        {
-            DataTable dt = DBConfig.ExecuteQuery("SELECT * FROM Admin");
-            DataTable.DataSource = dt;
-        }
-
-        private void BtnSaveAdmin_Click(object sender, EventArgs e)
-        {
-            string user = InputAdminUsername.Text.Trim();
-            string pass = InputAdminPassword.Text.Trim();
-
-            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
-            {
-                MessageBox.Show("Username dan Password harus diisi!");
-                return;
-            }
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@user", user),
-                new SqlParameter("@pass", pass)
-            };
-
-            if (string.IsNullOrEmpty(selectedId))
-            {
-                DBConfig.ExecuteNonQuery("INSERT INTO Admin (username, password) VALUES (@user, @pass)", parameters);
-            }
-            else
-            {
-                SqlParameter[] updateParams = new SqlParameter[parameters.Length + 1];
-                parameters.CopyTo(updateParams, 0);
-                updateParams[parameters.Length] = new SqlParameter("@id", selectedId);
-                DBConfig.ExecuteNonQuery("UPDATE Admin SET username=@user, password=@pass WHERE id_user=@id", updateParams);
-            }
-            UpdateTabContext();
-        }
-
-        private void BtnDelAdmin_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(selectedId)) return;
-            if (MessageBox.Show("Hapus admin ini?", "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                SqlParameter[] parameters = { new SqlParameter("@id", selectedId) };
-                DBConfig.ExecuteNonQuery("DELETE FROM Admin WHERE id_user=@id", parameters);
-                UpdateTabContext();
-            }
-        }
-
-        private void BtnClearAdmin_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            selectedId = "";
-        }
-
-
-
-        private void LoadReservasi()
-        {
-            DataTable dt = DBConfig.ExecuteQuery(@"
-                SELECT r.id_reservasi, m.id_meja, p.id_pelanggan, 
-                       m.kode as [Kode Meja], p.nama as [Nama Pelanggan], r.waktu_kedatangan, r.jumlah_orang, r.bukti_transaksi
-                FROM Reservasi r
-                JOIN Meja m ON r.id_meja = m.id_meja
-                JOIN Pelanggan p ON r.id_pelanggan = p.id_pelanggan");
-            DataTable.DataSource = dt;
-        }
-
-        private void LoadMejaList()
-        {
-            DataTable dt = DBConfig.ExecuteQuery("SELECT id_meja, kode, status_meja, kode + ' (' + status_meja + ')' as display, id_meja as value FROM Meja");
-            InputMeja.DisplayMember = "display";
-            InputMeja.ValueMember = "value";
-            InputMeja.DataSource = dt;
-        }
-
-        private void LoadPelangganList()
-        {
-            DataTable dt = DBConfig.ExecuteQuery("SELECT id_pelanggan, nama, no_telepon FROM Pelanggan");
+            InputPelanggan.DataSource = _pelangganBll.GetData();
             InputPelanggan.DisplayMember = "nama";
             InputPelanggan.ValueMember = "id_pelanggan";
-            InputPelanggan.DataSource = dt;
-            InputPelanggan.SelectedIndex = -1;
         }
-
-        private void InputPelanggan_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (InputPelanggan.SelectedValue != null && InputPelanggan.SelectedValue is int)
-            {
-                DataRowView row = (DataRowView)InputPelanggan.SelectedItem;
-                InputCepatTeleponPelanggan.Text = row["no_telepon"].ToString();
-            }
-        }
-
-        private void InputPelanggan_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void InputMeja_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (InputMeja.SelectedValue != null && InputMeja.SelectedValue is int)
-            {
-                DataRowView row = (DataRowView)InputMeja.SelectedItem;
-                string status = row["status_meja"].ToString();
-                if (status != "Tersedia")
-                {
-                    MessageBox.Show($"Perhatian: Meja {row["kode"]} saat ini berstatus {status}.", "Status Meja");
-                }
-            }
-        }
-
-        private void BtnOpenFileDialog_Click(object sender, EventArgs e)
-        {
-            if (BuktiTransferDialog.ShowDialog() == DialogResult.OK)
-            {
-                InputBuktiReservasi.Text = BuktiTransferDialog.FileName;
-            }
-        }
-
-        private void BtnSaveReservasi_Click(object sender, EventArgs e)
-        {
-            if (InputMeja.SelectedValue == null) { MessageBox.Show("Pilih Meja!"); return; }
-            
-            int idPelanggan = -1;
-            string namaPelanggan = InputPelanggan.Text.Trim();
-            string telpPelanggan = InputCepatTeleponPelanggan.Text.Trim();
-
-            if (string.IsNullOrEmpty(namaPelanggan) || string.IsNullOrEmpty(telpPelanggan))
-            {
-                MessageBox.Show("Nama Pelanggan dan Telepon harus diisi!");
-                return;
-            }
-
-            DataTable dtP = DBConfig.ExecuteQuery("SELECT id_pelanggan FROM Pelanggan WHERE no_telepon = @telp", new SqlParameter[] { new SqlParameter("@telp", telpPelanggan) });
-            if (dtP != null && dtP.Rows.Count > 0)
-            {
-                idPelanggan = Convert.ToInt32(dtP.Rows[0]["id_pelanggan"]);
-            }
-            else
-            {
-                DBConfig.ExecuteNonQuery("INSERT INTO Pelanggan (nama, no_telepon) VALUES (@nama, @telp)", new SqlParameter[] { 
-                    new SqlParameter("@nama", namaPelanggan),
-                    new SqlParameter("@telp", telpPelanggan)
-                });
-                idPelanggan = Convert.ToInt32(DBConfig.ExecuteScalar("SELECT TOP 1 id_pelanggan FROM Pelanggan ORDER BY id_pelanggan DESC"));
-            }
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@id_p", idPelanggan),
-                new SqlParameter("@id_m", InputMeja.SelectedValue),
-                new SqlParameter("@id_u", currentUserId == 0 ? 1 : currentUserId),
-                new SqlParameter("@waktu", InputWaktuReservasi.Text),
-                new SqlParameter("@jml", InputJumlahOrangReservasi.Text),
-                new SqlParameter("@bukti", InputBuktiReservasi.Text)
-            };
-
-            if (string.IsNullOrEmpty(selectedId))
-            {
-                DBConfig.ExecuteNonQuery(@"INSERT INTO Reservasi (id_pelanggan, id_meja, id_user, waktu_kedatangan, jumlah_orang, bukti_transaksi) 
-                                           VALUES (@id_p, @id_m, @id_u, @waktu, @jml, @bukti)", parameters);
-            }
-            else
-            {
-                SqlParameter[] updateParams = new SqlParameter[parameters.Length + 1];
-                parameters.CopyTo(updateParams, 0);
-                updateParams[parameters.Length] = new SqlParameter("@id", selectedId);
-                DBConfig.ExecuteNonQuery(@"UPDATE Reservasi SET id_pelanggan=@id_p, id_meja=@id_m, waktu_kedatangan=@waktu, 
-                                           jumlah_orang=@jml, bukti_transaksi=@bukti WHERE id_reservasi=@id", updateParams);
-            }
-            UpdateTabContext();
-        }
-
-        private void BtnDelReservasi_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(selectedId)) return;
-            if (MessageBox.Show("Hapus reservasi ini?", "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                SqlParameter[] parameters = { new SqlParameter("@id", selectedId) };
-                DBConfig.ExecuteNonQuery("DELETE FROM Reservasi WHERE id_reservasi=@id", parameters);
-                UpdateTabContext();
-            }
-        }
-
-        private void BtnClearReservasi_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            selectedId = "";
-        }
-
-
 
         private void DataTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            DataGridViewRow row = DataTable.Rows[e.RowIndex];
             
-            switch (TabMenu.SelectedTab.Name)
+            // Sync Reservasi ComboBoxes manually as DataBindings for ValueMember is tricky
+            if (TabMenu.SelectedTab.Name == "TabReservasi")
             {
-                case "TabMeja":
-                    selectedId = row.Cells["id_meja"].Value.ToString();
-                    InputKodeMeja.Text = row.Cells["kode"].Value.ToString();
-                    InputKapasitasMeja.Text = row.Cells["kapasitas"].Value.ToString();
-                    InputStatusReservasi.Text = row.Cells["status_meja"].Value.ToString();
-                    break;
-                case "TabPelanggan":
-                    selectedId = row.Cells["id_pelanggan"].Value.ToString();
-                    InputNamaPelanggan.Text = row.Cells["nama"].Value.ToString();
-                    InputTeleponPelanggan.Text = row.Cells["no_telepon"].Value.ToString();
-                    break;
-                case "TabAdmin":
-                    selectedId = row.Cells["id_user"].Value.ToString();
-                    InputAdminUsername.Text = row.Cells["username"].Value.ToString();
-                    InputAdminPassword.Text = row.Cells["password"].Value.ToString();
-                    break;
-                case "TabReservasi":
-                    selectedId = row.Cells["id_reservasi"].Value.ToString();
+                var row = DataTable.Rows[e.RowIndex];
+                if (row.Cells["id_meja"].Value != DBNull.Value)
                     InputMeja.SelectedValue = row.Cells["id_meja"].Value;
+                if (row.Cells["id_pelanggan"].Value != DBNull.Value)
                     InputPelanggan.SelectedValue = row.Cells["id_pelanggan"].Value;
-                    
-                    if (DateTime.TryParse(row.Cells["waktu_kedatangan"].Value.ToString(), out DateTime dt))
-                    {
-                        InputWaktuReservasi.Value = dt;
-                    }
-                    
-                    InputJumlahOrangReservasi.Text = row.Cells["jumlah_orang"].Value.ToString();
-                    InputBuktiReservasi.Text = row.Cells["bukti_transaksi"].Value.ToString();
-                    break;
             }
         }
 
         private void ClearForm()
         {
-            // Meja
             InputKodeMeja.Clear();
             InputKapasitasMeja.Clear();
-            InputStatusReservasi.SelectedIndex = -1;
-            
-            // Pelanggan
             InputNamaPelanggan.Clear();
             InputTeleponPelanggan.Clear();
-            
-            // Reservasi
-            InputMeja.SelectedIndex = -1;
-            InputPelanggan.SelectedIndex = -1;
-            InputWaktuReservasi.Value = DateTime.Now;
-            InputJumlahOrangReservasi.Clear();
-            InputBuktiReservasi.Clear();
-            InputCepatTeleponPelanggan.Clear();
-            
-            // Admin
             InputAdminUsername.Clear();
             InputAdminPassword.Clear();
+            InputJumlahOrangReservasi.Clear();
+            InputBuktiReservasi.Clear();
+            InputSearch.Clear();
         }
 
-        private void BtnSearch_Click(object sender, EventArgs e)
-        {
-            string keyword = "%" + InputSearch.Text.Trim() + "%";
-            string query = "";
-            SqlParameter[] parameters = { new SqlParameter("@key", keyword) };
+        // --- Action Methods ---
 
+        private void SaveMeja()
+        {
+            try {
+                if (_bsMeja.Current == null || string.IsNullOrEmpty(InputKodeMeja.Text)) {
+                    _mejaBll.AddMeja(InputKodeMeja.Text, int.Parse(InputKapasitasMeja.Text));
+                } else {
+                    DataRowView row = (DataRowView)_bsMeja.Current;
+                    _mejaBll.UpdateStatus((int)row["id_meja"], InputStatusReservasi.Text);
+                }
+                UpdateTabContext();
+            } catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void DeleteMeja()
+        {
+            if (_bsMeja.Current == null) return;
+            DataRowView row = (DataRowView)_bsMeja.Current;
+            if (_mejaBll.DeleteMeja((int)row["id_meja"])) UpdateTabContext();
+        }
+
+        private void SavePelanggan()
+        {
+            try {
+                if (_bsPelanggan.Current == null || string.IsNullOrEmpty(InputNamaPelanggan.Text)) {
+                    _pelangganBll.AddPelanggan(InputNamaPelanggan.Text, InputTeleponPelanggan.Text);
+                } else {
+                    DataRowView row = (DataRowView)_bsPelanggan.Current;
+                    _pelangganBll.UpdatePelanggan((int)row["id_pelanggan"], InputNamaPelanggan.Text, InputTeleponPelanggan.Text);
+                }
+                UpdateTabContext();
+            } catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void DeletePelanggan()
+        {
+            if (_bsPelanggan.Current == null) return;
+            DataRowView row = (DataRowView)_bsPelanggan.Current;
+            if (_pelangganBll.DeletePelanggan((int)row["id_pelanggan"])) UpdateTabContext();
+        }
+
+        private void SaveAdmin()
+        {
+            try {
+                if (_bsAdmin.Current == null) {
+                    _adminBll.AddAdmin(InputAdminUsername.Text, InputAdminPassword.Text);
+                } else {
+                    DataRowView row = (DataRowView)_bsAdmin.Current;
+                    _adminBll.UpdateAdmin((int)row["id_user"], InputAdminUsername.Text, InputAdminPassword.Text);
+                }
+                UpdateTabContext();
+            } catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void DeleteAdmin()
+        {
+            if (_bsAdmin.Current == null) return;
+            DataRowView row = (DataRowView)_bsAdmin.Current;
+            if (_adminBll.DeleteAdmin((int)row["id_user"])) UpdateTabContext();
+        }
+
+        private void SaveReservasi()
+        {
+            try {
+                int idPel = (int)InputPelanggan.SelectedValue;
+                int idMeja = (int)InputMeja.SelectedValue;
+                if (_bsReservasi.Current == null) {
+                    _reservasiBll.AddReservasi(idPel, idMeja, InputWaktuReservasi.Value, int.Parse(InputJumlahOrangReservasi.Text), InputBuktiReservasi.Text);
+                } else {
+                    DataRowView row = (DataRowView)_bsReservasi.Current;
+                    _reservasiBll.UpdateReservasi((int)row["id_reservasi"], idPel, idMeja, InputWaktuReservasi.Value, int.Parse(InputJumlahOrangReservasi.Text), InputBuktiReservasi.Text);
+                }
+                UpdateTabContext();
+            } catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void DeleteReservasi()
+        {
+            if (_bsReservasi.Current == null) return;
+            DataRowView row = (DataRowView)_bsReservasi.Current;
+            if (_reservasiBll.DeleteReservasi((int)row["id_reservasi"])) UpdateTabContext();
+        }
+
+        private void SearchData()
+        {
+            string key = InputSearch.Text;
             switch (TabMenu.SelectedTab.Name)
             {
-                case "TabMeja":
-                    query = "SELECT * FROM Meja WHERE kode LIKE @key OR status_meja LIKE @key";
-                    break;
-                case "TabPelanggan":
-                    query = "SELECT * FROM Pelanggan WHERE nama LIKE @key OR no_telepon LIKE @key";
-                    break;
-                case "TabReservasi":
-                    query = "SELECT r.*, p.nama, m.kode FROM Reservasi r JOIN Pelanggan p ON r.id_pelanggan = p.id_pelanggan JOIN Meja m ON r.id_meja = m.id_meja WHERE p.nama LIKE @key OR m.kode LIKE @key";
-                    break;
-                case "TabAdmin":
-                    query = "SELECT * FROM Admin WHERE username LIKE @key";
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                DataTable dt = DBConfig.ExecuteQuery(query, parameters);
-                DataTable.DataSource = dt;
+                case "TabMeja": _bsMeja.DataSource = _mejaBll.Search(key); break;
+                case "TabPelanggan": _bsPelanggan.DataSource = _pelangganBll.Search(key); break;
+                case "TabReservasi": _bsReservasi.DataSource = _reservasiBll.Search(key); break;
+                case "TabAdmin": _bsAdmin.DataSource = _adminBll.SearchAdmin(key); break;
             }
         }
-
-
     }
 }

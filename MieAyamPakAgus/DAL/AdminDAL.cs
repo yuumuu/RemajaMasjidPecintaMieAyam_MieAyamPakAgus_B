@@ -16,7 +16,9 @@ namespace MieAyamPakAgus.DAL
                 new SqlParameter("@password", password)
             };
 
-            DataTable dt = _db.ExecuteDataTable("sp_LoginAdmin", param);
+            // Menggunakan Query langsung (Inline SQL) sesuai permintaan, tetap aman dengan Parameter
+            string query = "SELECT id_user FROM Admin WHERE username = @username AND password = @password";
+            DataTable dt = _db.ExecuteDataTable(query, param);
             if (dt.Rows.Count > 0)
             {
                 id = (int)dt.Rows[0]["id_user"];

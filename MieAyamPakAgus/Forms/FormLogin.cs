@@ -52,7 +52,7 @@ namespace MieAyamPakAgus.Forms
         private void OpenMainForm()
         {
             this.Hide();
-            FormMain main = new FormMain();
+            CRUDForm main = new CRUDForm();
             main.Show();
         }
     }

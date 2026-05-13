@@ -25,7 +25,7 @@ namespace MieAyamPakAgus.DAL
             {
                 using (SqlCommand cmd = new SqlCommand(spName, conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = spName.Trim().Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
                     if (parameters != null)
                     {
                         cmd.Parameters.AddRange(parameters);
@@ -47,7 +47,7 @@ namespace MieAyamPakAgus.DAL
             {
                 using (SqlCommand cmd = new SqlCommand(spName, conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = spName.Trim().Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
                     if (parameters != null)
                     {
                         cmd.Parameters.AddRange(parameters);
@@ -65,7 +65,7 @@ namespace MieAyamPakAgus.DAL
             {
                 using (SqlCommand cmd = new SqlCommand(spName, conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = spName.Trim().Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
                     if (parameters != null)
                     {
                         cmd.Parameters.AddRange(parameters);
@@ -83,7 +83,7 @@ namespace MieAyamPakAgus.DAL
             {
                 using (SqlCommand cmd = new SqlCommand(spName, conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = spName.Trim().Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
                     if (parameters != null) cmd.Parameters.AddRange(parameters);
 
                     SqlParameter outParam = new SqlParameter(outputParamName, SqlDbType.Int)
