@@ -70,11 +70,21 @@ namespace MieAyamPakAgus.Forms
             txtBukti.DataBindings.Add("Text", _bs, "bukti_transaksi");
         }
 
+        private void UnbindControls()
+        {
+            dtpWaktu.DataBindings.Clear();
+            numOrang.DataBindings.Clear();
+            txtBukti.DataBindings.Clear();
+        }
+
         private void LoadData()
         {
             try
             {
                 dgvReservasi.SuspendLayout();
+
+                UnbindControls();
+                bnReservasi.BindingSource = null;
 
                 DataTable dt = _bll.GetData();
 
@@ -87,6 +97,11 @@ namespace MieAyamPakAgus.Forms
 
                 _bs.DataSource = null;
                 _bs.DataSource = dt;
+
+                bnReservasi.BindingSource = _bs;
+                BindControls();
+
+                HideIdColumns();
 
                 dgvReservasi.ClearSelection();
                 dgvReservasi.CurrentCell = null;
@@ -103,6 +118,17 @@ namespace MieAyamPakAgus.Forms
             {
                 dgvReservasi.ResumeLayout();
             }
+        }
+
+        private void HideIdColumns()
+        {
+            string[] ids = { "id_reservasi", "id_pelanggan", "id_meja", "id_user", "created_at" };
+            foreach (string col in ids)
+                if (dgvReservasi.Columns.Contains(col))
+                    dgvReservasi.Columns[col].Visible = false;
+
+            if (dgvReservasi.Columns.Contains("admin_name"))
+                dgvReservasi.Columns["admin_name"].HeaderText = "Admin";
         }
 
         private void ClearForm()
@@ -206,12 +232,6 @@ namespace MieAyamPakAgus.Forms
 
             try
             {
-                if (Session.IdUser <= 0)
-                {
-                    MessageBox.Show("Sesi login tidak valid. Silakan login ulang.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 int idPel = Convert.ToInt32(cmbPelanggan.SelectedValue);
                 int idMeja = Convert.ToInt32(cmbMeja.SelectedValue);
                 string bukti = CopyToUploads(txtBukti.Text);
@@ -308,6 +328,9 @@ namespace MieAyamPakAgus.Forms
             {
                 dgvReservasi.SuspendLayout();
 
+                UnbindControls();
+                bnReservasi.BindingSource = null;
+
                 DataTable dt = _bll.Search(txtCari.Text.Trim());
 
                 if (dt == null)
@@ -318,6 +341,10 @@ namespace MieAyamPakAgus.Forms
 
                 _bs.DataSource = null;
                 _bs.DataSource = dt;
+
+                bnReservasi.BindingSource = _bs;
+                BindControls();
+                HideIdColumns();
 
                 dgvReservasi.ClearSelection();
                 dgvReservasi.CurrentCell = null;
@@ -365,6 +392,11 @@ namespace MieAyamPakAgus.Forms
             MessageBox.Show("Data error: " + e.Exception.Message,
                 "DataGridView", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             e.ThrowException = false;
+        }
+
+        private void btnRefresh_Click_1(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }

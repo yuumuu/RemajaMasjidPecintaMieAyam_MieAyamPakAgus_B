@@ -74,10 +74,11 @@ namespace MieAyamPakAgus.Forms
 
         private void CloseActiveForm()
         {
-            if (_activeForm != null)
+            var formToClose = _activeForm;
+            if (formToClose != null)
             {
-                _activeForm.Close();
-                _activeForm.Dispose();
+                formToClose.Close();
+                formToClose.Dispose();
                 _activeForm = null;
                 pnlContent.Controls.Clear();
             }

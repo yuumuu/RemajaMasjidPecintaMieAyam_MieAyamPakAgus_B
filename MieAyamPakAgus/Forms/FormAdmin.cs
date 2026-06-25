@@ -63,6 +63,8 @@ namespace MieAyamPakAgus.Forms
                 bnAdmin.BindingSource = _bs;
                 BindControls();
 
+                HideIdColumns();
+
                 dgvAdmin.ClearSelection();
                 dgvAdmin.CurrentCell = null;
 
@@ -80,6 +82,12 @@ namespace MieAyamPakAgus.Forms
             }
         }
 
+        private void HideIdColumns()
+        {
+            if (dgvAdmin.Columns.Contains("id_user"))
+                dgvAdmin.Columns["id_user"].Visible = false;
+        }
+
         private void ClearForm()
         {
             FormHelper.ClearFormControls(groupBox1);
@@ -92,7 +100,7 @@ namespace MieAyamPakAgus.Forms
         {
             FormHelper.ClearErrors(groupBox1);
 
-            string err = Validators.ValidateUsername(txtUsername.Text);
+            string err = Validators.ValidateUsername(txtUsername.Text.Trim());
             if (err != null) { FormHelper.HighlightError(txtUsername, true); return err; }
 
             err = Validators.ValidatePassword(txtPassword.Text);
@@ -201,6 +209,7 @@ namespace MieAyamPakAgus.Forms
 
                 bnAdmin.BindingSource = _bs;
                 BindControls();
+                HideIdColumns();
 
                 dgvAdmin.ClearSelection();
                 dgvAdmin.CurrentCell = null;

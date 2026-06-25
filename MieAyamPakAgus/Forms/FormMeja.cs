@@ -38,11 +38,21 @@ namespace MieAyamPakAgus.Forms
             cmbStatus.DataBindings.Add("SelectedItem", _bs, "status_meja");
         }
 
+        private void UnbindControls()
+        {
+            txtKode.DataBindings.Clear();
+            numKapasitas.DataBindings.Clear();
+            cmbStatus.DataBindings.Clear();
+        }
+
         private void LoadData()
         {
             try
             {
                 dgvMeja.SuspendLayout();
+
+                UnbindControls();
+                bnMeja.BindingSource = null;
 
                 DataTable dt = _bll.GetData();
 
@@ -55,6 +65,11 @@ namespace MieAyamPakAgus.Forms
 
                 _bs.DataSource = null;
                 _bs.DataSource = dt;
+
+                bnMeja.BindingSource = _bs;
+                BindControls();
+
+                HideIdColumns();
 
                 dgvMeja.ClearSelection();
                 dgvMeja.CurrentCell = null;
@@ -73,10 +88,20 @@ namespace MieAyamPakAgus.Forms
             }
         }
 
+        private void HideIdColumns()
+        {
+            if (dgvMeja.Columns.Contains("id_meja"))
+                dgvMeja.Columns["id_meja"].Visible = false;
+        }
+
         private void ClearForm()
         {
             FormHelper.ClearFormControls(groupBox1);
-            cmbStatus.SelectedIndex = 0;
+            // Ensure cmbStatus has items before selecting the first item
+            if (cmbStatus.Items.Count > 0)
+                cmbStatus.SelectedIndex = 0;
+            else
+                cmbStatus.SelectedIndex = -1;
             btnTambah.Enabled = true;
             btnUpdateStatus.Enabled = false;
             btnHapus.Enabled = false;
@@ -86,7 +111,7 @@ namespace MieAyamPakAgus.Forms
         {
             FormHelper.ClearErrors(groupBox1);
 
-            string err = Validators.ValidateKodeMeja(txtKode.Text);
+            string err = Validators.ValidateKodeMeja(txtKode.Text.Trim());
             if (err != null) { FormHelper.HighlightError(txtKode, true); return err; }
 
             if ((int)numKapasitas.Value < 1)
@@ -176,6 +201,9 @@ namespace MieAyamPakAgus.Forms
             {
                 dgvMeja.SuspendLayout();
 
+                UnbindControls();
+                bnMeja.BindingSource = null;
+
                 DataTable dt = _bll.Search(txtCari.Text.Trim());
 
                 if (dt == null)
@@ -186,6 +214,10 @@ namespace MieAyamPakAgus.Forms
 
                 _bs.DataSource = null;
                 _bs.DataSource = dt;
+
+                bnMeja.BindingSource = _bs;
+                BindControls();
+                HideIdColumns();
 
                 dgvMeja.ClearSelection();
                 dgvMeja.CurrentCell = null;
@@ -223,6 +255,11 @@ namespace MieAyamPakAgus.Forms
             MessageBox.Show("Data error: " + e.Exception.Message,
                 "DataGridView", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             e.ThrowException = false;
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }

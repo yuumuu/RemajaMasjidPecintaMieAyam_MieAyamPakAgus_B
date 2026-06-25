@@ -36,11 +36,20 @@ namespace MieAyamPakAgus.Forms
             txtNoTelp.DataBindings.Add("Text", _bs, "no_telepon");
         }
 
+        private void UnbindControls()
+        {
+            txtNama.DataBindings.Clear();
+            txtNoTelp.DataBindings.Clear();
+        }
+
         private void LoadData()
         {
             try
             {
                 dgvPelanggan.SuspendLayout();
+
+                UnbindControls();
+                bnPelanggan.BindingSource = null;
 
                 DataTable dt = _bll.GetData();
 
@@ -53,6 +62,11 @@ namespace MieAyamPakAgus.Forms
 
                 _bs.DataSource = null;
                 _bs.DataSource = dt;
+
+                bnPelanggan.BindingSource = _bs;
+                BindControls();
+
+                HideIdColumns();
 
                 dgvPelanggan.ClearSelection();
                 dgvPelanggan.CurrentCell = null;
@@ -71,6 +85,12 @@ namespace MieAyamPakAgus.Forms
             }
         }
 
+        private void HideIdColumns()
+        {
+            if (dgvPelanggan.Columns.Contains("id_pelanggan"))
+                dgvPelanggan.Columns["id_pelanggan"].Visible = false;
+        }
+
         private void ClearForm()
         {
             FormHelper.ClearFormControls(groupBox1);
@@ -83,10 +103,10 @@ namespace MieAyamPakAgus.Forms
         {
             FormHelper.ClearErrors(groupBox1);
 
-            string err = Validators.ValidateName(txtNama.Text);
+            string err = Validators.ValidateName(txtNama.Text.Trim());
             if (err != null) { FormHelper.HighlightError(txtNama, true); return err; }
 
-            err = Validators.ValidatePhone(txtNoTelp.Text);
+            err = Validators.ValidatePhone(txtNoTelp.Text.Trim());
             if (err != null) { FormHelper.HighlightError(txtNoTelp, true); return err; }
 
             return null;
@@ -176,6 +196,9 @@ namespace MieAyamPakAgus.Forms
             {
                 dgvPelanggan.SuspendLayout();
 
+                UnbindControls();
+                bnPelanggan.BindingSource = null;
+
                 DataTable dt = _bll.Search(txtCari.Text.Trim());
 
                 if (dt == null)
@@ -186,6 +209,10 @@ namespace MieAyamPakAgus.Forms
 
                 _bs.DataSource = null;
                 _bs.DataSource = dt;
+
+                bnPelanggan.BindingSource = _bs;
+                BindControls();
+                HideIdColumns();
 
                 dgvPelanggan.ClearSelection();
                 dgvPelanggan.CurrentCell = null;

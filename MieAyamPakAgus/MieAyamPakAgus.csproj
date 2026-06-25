@@ -152,6 +152,12 @@
       <DependentUpon>FormLaporanReservasi.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMeja.resx">
+      <DependentUpon>FormMeja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormReservasi.resx">
+      <DependentUpon>FormReservasi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LaporanReservasi.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>LaporanReservasi.cs</LastGenOutput>

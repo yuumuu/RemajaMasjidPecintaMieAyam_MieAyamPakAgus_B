@@ -183,9 +183,16 @@ CREATE OR ALTER PROCEDURE sp_DeleteMeja
     @id_meja INT
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM Reservasi WHERE id_meja = @id_meja)
-        THROW 50003, 'Meja sedang digunakan dalam reservasi.', 1;
-    DELETE FROM Meja WHERE id_meja = @id_meja;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        DELETE FROM Reservasi WHERE id_meja = @id_meja;
+        DELETE FROM Meja WHERE id_meja = @id_meja;
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK;
+        THROW;
+    END CATCH
 END;
 GO
 

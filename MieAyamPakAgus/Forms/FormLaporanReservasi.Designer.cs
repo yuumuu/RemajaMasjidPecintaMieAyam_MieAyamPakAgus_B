@@ -14,7 +14,6 @@ namespace MieAyamPakAgus.Forms
         private void InitializeComponent()
         {
             this.pnlFilter = new System.Windows.Forms.Panel();
-            this.btnPrint = new System.Windows.Forms.Button();
             this.btnExportPdf = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.cmbMeja = new System.Windows.Forms.ComboBox();
@@ -31,7 +30,6 @@ namespace MieAyamPakAgus.Forms
             // 
             // pnlFilter
             // 
-            this.pnlFilter.Controls.Add(this.btnPrint);
             this.pnlFilter.Controls.Add(this.btnExportPdf);
             this.pnlFilter.Controls.Add(this.btnGenerate);
             this.pnlFilter.Controls.Add(this.cmbMeja);
@@ -50,17 +48,6 @@ namespace MieAyamPakAgus.Forms
             this.pnlFilter.Size = new System.Drawing.Size(2400, 115);
             this.pnlFilter.TabIndex = 0;
             // 
-            // btnPrint
-            // 
-            this.btnPrint.Location = new System.Drawing.Point(1980, 29);
-            this.btnPrint.Margin = new System.Windows.Forms.Padding(6);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(160, 54);
-            this.btnPrint.TabIndex = 10;
-            this.btnPrint.Text = "Print";
-            this.btnPrint.UseVisualStyleBackColor = true;
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            // 
             // btnExportPdf
             // 
             this.btnExportPdf.Location = new System.Drawing.Point(1800, 29);
@@ -70,6 +57,7 @@ namespace MieAyamPakAgus.Forms
             this.btnExportPdf.TabIndex = 9;
             this.btnExportPdf.Text = "Export PDF";
             this.btnExportPdf.UseVisualStyleBackColor = true;
+            this.btnExportPdf.Visible = false;
             this.btnExportPdf.Click += new System.EventHandler(this.btnExportPdf_Click);
             // 
             // btnGenerate
@@ -206,7 +194,6 @@ namespace MieAyamPakAgus.Forms
         private System.Windows.Forms.ComboBox cmbPelanggan;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExportPdf;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
     }
