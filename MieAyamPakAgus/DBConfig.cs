@@ -5,9 +5,10 @@ using System.Windows.Forms;
 
 namespace MieAyamPakAgus
 {
+    [Obsolete("Use DBHelper in DAL folder instead. This class is kept for reference only.")]
     public static class DBConfig
     {
-        public static string ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=MieAyamPakAgus;Integrated Security=True";
+        public static string ConnectionString = $@"Data Source=Haidaryuum,1433;Initial Catalog=MieAyamPakAgus;User ID=sa;Password=123456;";
 
         public static SqlConnection GetConnection()
         {

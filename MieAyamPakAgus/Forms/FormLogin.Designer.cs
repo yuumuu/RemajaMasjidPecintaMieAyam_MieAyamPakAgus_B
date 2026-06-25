@@ -26,24 +26,27 @@ namespace MieAyamPakAgus.Forms
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(115, 80);
+            this.txtUsername.Location = new System.Drawing.Point(230, 154);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(180, 20);
+            this.txtUsername.Size = new System.Drawing.Size(370, 31);
             this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(115, 120);
+            this.txtPassword.Location = new System.Drawing.Point(230, 231);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(180, 20);
+            this.txtPassword.Size = new System.Drawing.Size(370, 31);
             this.txtPassword.TabIndex = 1;
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(115, 160);
+            this.btnLogin.Location = new System.Drawing.Point(230, 308);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(85, 35);
+            this.btnLogin.Size = new System.Drawing.Size(170, 67);
             this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "LOGIN";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -52,18 +55,20 @@ namespace MieAyamPakAgus.Forms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 83);
+            this.label1.Location = new System.Drawing.Point(60, 160);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(110, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Username";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(30, 123);
+            this.label2.Location = new System.Drawing.Point(60, 237);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.Size = new System.Drawing.Size(106, 25);
             this.label2.TabIndex = 4;
             this.label2.Text = "Password";
             // 
@@ -71,17 +76,19 @@ namespace MieAyamPakAgus.Forms
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(110, 25);
+            this.label3.Location = new System.Drawing.Point(220, 48);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 24);
+            this.label3.Size = new System.Drawing.Size(261, 44);
             this.label3.TabIndex = 5;
             this.label3.Text = "LOGIN USER";
             // 
             // btnSuperadmin
             // 
-            this.btnSuperadmin.Location = new System.Drawing.Point(210, 160);
+            this.btnSuperadmin.Location = new System.Drawing.Point(420, 308);
+            this.btnSuperadmin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnSuperadmin.Name = "btnSuperadmin";
-            this.btnSuperadmin.Size = new System.Drawing.Size(85, 35);
+            this.btnSuperadmin.Size = new System.Drawing.Size(180, 67);
             this.btnSuperadmin.TabIndex = 6;
             this.btnSuperadmin.Text = "SUPERADMIN";
             this.btnSuperadmin.UseVisualStyleBackColor = true;
@@ -90,9 +97,9 @@ namespace MieAyamPakAgus.Forms
             // FormLogin
             // 
             this.AcceptButton = this.btnLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 230);
+            this.ClientSize = new System.Drawing.Size(680, 442);
             this.Controls.Add(this.btnSuperadmin);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -101,6 +108,7 @@ namespace MieAyamPakAgus.Forms
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

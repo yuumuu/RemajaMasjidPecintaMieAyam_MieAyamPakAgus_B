@@ -7,9 +7,7 @@ namespace MieAyamPakAgus.Forms
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
@@ -25,6 +23,7 @@ namespace MieAyamPakAgus.Forms
             this.btnTambah = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnHapus = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.txtCari = new System.Windows.Forms.TextBox();
             this.btnCari = new System.Windows.Forms.Button();
@@ -44,9 +43,9 @@ namespace MieAyamPakAgus.Forms
             ((System.ComponentModel.ISupportInitialize)(this.bnPelanggan)).BeginInit();
             this.bnPelanggan.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // dgvPelanggan
-            // 
+            //
             this.dgvPelanggan.AllowUserToAddRows = false;
             this.dgvPelanggan.AllowUserToDeleteRows = false;
             this.dgvPelanggan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -56,9 +55,9 @@ namespace MieAyamPakAgus.Forms
             this.dgvPelanggan.Size = new System.Drawing.Size(560, 220);
             this.dgvPelanggan.TabIndex = 0;
             this.dgvPelanggan.SelectionChanged += new System.EventHandler(this.dgvPelanggan_SelectionChanged);
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.txtNoTelp);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.txtNama);
@@ -69,98 +68,110 @@ namespace MieAyamPakAgus.Forms
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Data Pelanggan";
-            // 
+            //
             // txtNoTelp
-            // 
+            //
             this.txtNoTelp.Location = new System.Drawing.Point(100, 60);
+            this.txtNoTelp.MaxLength = 15;
             this.txtNoTelp.Name = "txtNoTelp";
             this.txtNoTelp.Size = new System.Drawing.Size(230, 20);
             this.txtNoTelp.TabIndex = 3;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(20, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "No Telepon";
-            // 
+            //
             // txtNama
-            // 
+            //
             this.txtNama.Location = new System.Drawing.Point(100, 25);
+            this.txtNama.MaxLength = 100;
             this.txtNama.Name = "txtNama";
             this.txtNama.Size = new System.Drawing.Size(230, 20);
             this.txtNama.TabIndex = 1;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(20, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nama";
-            // 
+            //
             // btnTambah
-            // 
-            this.btnTambah.Location = new System.Drawing.Point(12, 118);
+            //
+            this.btnTambah.Location = new System.Drawing.Point(380, 12);
             this.btnTambah.Name = "btnTambah";
             this.btnTambah.Size = new System.Drawing.Size(85, 30);
             this.btnTambah.TabIndex = 2;
             this.btnTambah.Text = "Tambah";
             this.btnTambah.UseVisualStyleBackColor = true;
             this.btnTambah.Click += new System.EventHandler(this.btnTambah_Click);
-            // 
+            //
             // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(103, 118);
+            //
+            this.btnUpdate.Location = new System.Drawing.Point(380, 48);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(85, 30);
             this.btnUpdate.TabIndex = 3;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
+            //
             // btnHapus
-            // 
-            this.btnHapus.Location = new System.Drawing.Point(194, 118);
+            //
+            this.btnHapus.Location = new System.Drawing.Point(380, 84);
             this.btnHapus.Name = "btnHapus";
             this.btnHapus.Size = new System.Drawing.Size(85, 30);
             this.btnHapus.TabIndex = 4;
             this.btnHapus.Text = "Hapus";
             this.btnHapus.UseVisualStyleBackColor = true;
             this.btnHapus.Click += new System.EventHandler(this.btnHapus_Click);
-            // 
+            //
+            // btnClear
+            //
+            this.btnClear.Location = new System.Drawing.Point(380, 120);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(85, 30);
+            this.btnClear.TabIndex = 5;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            //
             // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(285, 118);
+            //
+            this.btnRefresh.Location = new System.Drawing.Point(285, 120);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(85, 30);
             this.btnRefresh.TabIndex = 5;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
+            //
             // txtCari
-            // 
-            this.txtCari.Location = new System.Drawing.Point(370, 145);
+            //
+            this.txtCari.Location = new System.Drawing.Point(370, 156);
             this.txtCari.Name = "txtCari";
             this.txtCari.Size = new System.Drawing.Size(120, 20);
             this.txtCari.TabIndex = 6;
-            // 
+            //
             // btnCari
-            // 
-            this.btnCari.Location = new System.Drawing.Point(496, 143);
+            //
+            this.btnCari.Location = new System.Drawing.Point(496, 154);
             this.btnCari.Name = "btnCari";
-            this.btnCari.Size = new System.Drawing.Size(75, 23);
+            this.btnCari.Size = new System.Drawing.Size(85, 30);
             this.btnCari.TabIndex = 7;
             this.btnCari.Text = "Cari";
             this.btnCari.UseVisualStyleBackColor = true;
             this.btnCari.Click += new System.EventHandler(this.btnCari_Click);
-            // 
+            //
             // bnPelanggan
-            // 
+            //
             this.bnPelanggan.AddNewItem = null;
             this.bnPelanggan.CountItem = this.bindingNavigatorCountItem;
             this.bnPelanggan.DeleteItem = null;
@@ -182,91 +193,12 @@ namespace MieAyamPakAgus.Forms
             this.bnPelanggan.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bnPelanggan.Name = "bnPelanggan";
             this.bnPelanggan.PositionItem = this.bindingNavigatorPositionItem;
-            this.bnPelanggan.Size = new System.Drawing.Size(584, 25);
+            this.bnPelanggan.Size = new System.Drawing.Size(600, 25);
             this.bnPelanggan.TabIndex = 8;
             this.bnPelanggan.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorMoveFirstItem
-            // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveFirstItem.Text = "Move first";
-            // 
-            // bindingNavigatorMovePreviousItem
-            // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-            // 
-            // bindingNavigatorSeparator
-            // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bindingNavigatorPositionItem
-            // 
-            this.bindingNavigatorPositionItem.AccessibleName = "Position";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-            // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            // 
-            // bindingNavigatorSeparator1
-            // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bindingNavigatorMoveNextItem
-            // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveNextItem.Text = "Move next";
-            // 
-            // bindingNavigatorMoveLastItem
-            // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveLastItem.Text = "Move last";
-            // 
-            // bindingNavigatorSeparator2
-            // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // FormPelanggan
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 441);
-            this.Controls.Add(this.lblTotal);
-            this.Controls.Add(this.bnPelanggan);
-            this.Controls.Add(this.btnCari);
-            this.Controls.Add(this.txtCari);
-            this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.btnHapus);
-            this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.btnTambah);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dgvPelanggan);
-            // 
+            //
             // lblTotal
-            // 
+            //
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.lblTotal.Location = new System.Drawing.Point(12, 400);
@@ -274,6 +206,23 @@ namespace MieAyamPakAgus.Forms
             this.lblTotal.Size = new System.Drawing.Size(95, 15);
             this.lblTotal.TabIndex = 9;
             this.lblTotal.Text = "Total Pelanggan: 0";
+            //
+            // FormPelanggan
+            //
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(600, 441);
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.bnPelanggan);
+            this.Controls.Add(this.btnCari);
+            this.Controls.Add(this.txtCari);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnHapus);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnTambah);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.dgvPelanggan);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormPelanggan";
@@ -288,7 +237,6 @@ namespace MieAyamPakAgus.Forms
             this.bnPelanggan.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         private System.Windows.Forms.DataGridView dgvPelanggan;
@@ -300,6 +248,7 @@ namespace MieAyamPakAgus.Forms
         private System.Windows.Forms.Button btnTambah;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnHapus;
+        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.TextBox txtCari;
         private System.Windows.Forms.Button btnCari;

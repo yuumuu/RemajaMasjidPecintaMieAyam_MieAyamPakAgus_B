@@ -1,6 +1,8 @@
 using System;
+using System.Data;
 using System.Windows.Forms;
 using MieAyamPakAgus.BLL;
+using MieAyamPakAgus.Helpers;
 
 namespace MieAyamPakAgus.Forms
 {
@@ -12,56 +14,108 @@ namespace MieAyamPakAgus.Forms
         public FormAdmin()
         {
             InitializeComponent();
+            dgvAdmin.AutoGenerateColumns = true;
+            dgvAdmin.DataError += dgvAdmin_DataError;
             dgvAdmin.DataSource = _bs;
             bnAdmin.BindingSource = _bs;
+            dgvAdmin.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvAdmin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         }
 
         private void FormAdmin_Load(object sender, EventArgs e)
         {
-            RefreshData();
+            LoadData();
             BindControls();
         }
 
         private void BindControls()
         {
             txtUsername.DataBindings.Clear();
-            // Password not bound for security, usually handled manually on insert/update
             txtUsername.DataBindings.Add("Text", _bs, "username");
         }
 
-        private void RefreshData()
+        private void UnbindControls()
+        {
+            txtUsername.DataBindings.Clear();
+        }
+
+        private void LoadData()
         {
             try
             {
-                _bs.DataSource = _bll.GetData();
+                dgvAdmin.SuspendLayout();
+
+                UnbindControls();
+                bnAdmin.BindingSource = null;
+
+                DataTable dt = _bll.GetData();
+
+                if (dt == null)
+                {
+                    _bs.DataSource = null;
+                    lblTotal.Text = "Total Admin: 0";
+                    return;
+                }
+
+                _bs.DataSource = null;
+                _bs.DataSource = dt;
+
+                bnAdmin.BindingSource = _bs;
+                BindControls();
+
+                dgvAdmin.ClearSelection();
+                dgvAdmin.CurrentCell = null;
+
                 lblTotal.Text = "Total Admin: " + _bll.GetTotal();
                 ClearForm();
             }
             catch (Exception ex)
             {
+                _bs.DataSource = null;
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                dgvAdmin.ResumeLayout();
             }
         }
 
         private void ClearForm()
         {
-            // Note: with binding, clearing might need to be handled by adding a new record to BS
-            // but for simplicity in this 3-layer setup, we can just clear UI if needed.
-            // However, BindControls means UI reflects BS.Current.
-            
+            FormHelper.ClearFormControls(groupBox1);
             btnTambah.Enabled = true;
             btnUpdate.Enabled = false;
             btnHapus.Enabled = false;
         }
 
+        private string ValidateInput()
+        {
+            FormHelper.ClearErrors(groupBox1);
+
+            string err = Validators.ValidateUsername(txtUsername.Text);
+            if (err != null) { FormHelper.HighlightError(txtUsername, true); return err; }
+
+            err = Validators.ValidatePassword(txtPassword.Text);
+            if (err != null) { FormHelper.HighlightError(txtPassword, true); return err; }
+
+            return null;
+        }
+
         private void btnTambah_Click(object sender, EventArgs e)
         {
+            string err = ValidateInput();
+            if (err != null)
+            {
+                FormHelper.ShowError(err);
+                return;
+            }
+
             try
             {
-                if (_bll.AddAdmin(txtUsername.Text, txtPassword.Text))
+                if (_bll.AddAdmin(txtUsername.Text.Trim(), txtPassword.Text))
                 {
-                    MessageBox.Show("Data admin berhasil ditambahkan!");
-                    RefreshData();
+                    MessageBox.Show("Data admin berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
                 }
             }
             catch (Exception ex)
@@ -72,15 +126,22 @@ namespace MieAyamPakAgus.Forms
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            string err = ValidateInput();
+            if (err != null)
+            {
+                FormHelper.ShowError(err);
+                return;
+            }
+
             try
             {
                 if (_bs.Current is System.Data.DataRowView row)
                 {
                     int id = Convert.ToInt32(row["id_user"]);
-                    if (_bll.UpdateAdmin(id, txtUsername.Text, txtPassword.Text))
+                    if (_bll.UpdateAdmin(id, txtUsername.Text.Trim(), txtPassword.Text))
                     {
-                        MessageBox.Show("Data admin berhasil diperbarui!");
-                        RefreshData();
+                        MessageBox.Show("Data admin berhasil diperbarui!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData();
                     }
                 }
             }
@@ -102,8 +163,8 @@ namespace MieAyamPakAgus.Forms
                     int id = Convert.ToInt32(row["id_user"]);
                     if (_bll.DeleteAdmin(id))
                     {
-                        MessageBox.Show("Data admin berhasil dihapus!");
-                        RefreshData();
+                        MessageBox.Show("Data admin berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData();
                     }
                 }
                 catch (Exception ex)
@@ -113,24 +174,75 @@ namespace MieAyamPakAgus.Forms
             }
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
         private void btnCari_Click(object sender, EventArgs e)
         {
-            _bs.DataSource = _bll.SearchAdmin(txtCari.Text);
+            try
+            {
+                dgvAdmin.SuspendLayout();
+
+                UnbindControls();
+                bnAdmin.BindingSource = null;
+
+                DataTable dt = _bll.SearchAdmin(txtCari.Text.Trim());
+
+                if (dt == null)
+                {
+                    _bs.DataSource = null;
+                    return;
+                }
+
+                _bs.DataSource = null;
+                _bs.DataSource = dt;
+
+                bnAdmin.BindingSource = _bs;
+                BindControls();
+
+                dgvAdmin.ClearSelection();
+                dgvAdmin.CurrentCell = null;
+            }
+            catch (Exception ex)
+            {
+                _bs.DataSource = null;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                dgvAdmin.ResumeLayout();
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            RefreshData();
+            LoadData();
         }
 
         private void dgvAdmin_SelectionChanged(object sender, EventArgs e)
         {
-            if (_bs.Current != null)
+            if (_bs.Count > 0 && _bs.Position >= 0 && _bs.Current != null)
             {
+                FormHelper.ClearErrors(groupBox1);
                 btnTambah.Enabled = false;
                 btnUpdate.Enabled = true;
                 btnHapus.Enabled = true;
             }
+            else
+            {
+                btnTambah.Enabled = true;
+                btnUpdate.Enabled = false;
+                btnHapus.Enabled = false;
+            }
+        }
+
+        private void dgvAdmin_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("Data error: " + e.Exception.Message,
+                "DataGridView", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            e.ThrowException = false;
         }
     }
 }

@@ -32,6 +32,7 @@ namespace MieAyamPakAgus.DAL
                 new SqlParameter("@id_reservasi", r.id_reservasi),
                 new SqlParameter("@id_pelanggan", r.id_pelanggan),
                 new SqlParameter("@id_meja", r.id_meja),
+                new SqlParameter("@id_user", Session.IdUser),
                 new SqlParameter("@waktu_kedatangan", r.waktu_kedatangan),
                 new SqlParameter("@jumlah_orang", r.jumlah_orang),
                 new SqlParameter("@bukti_transaksi", r.bukti_transaksi)

@@ -58,5 +58,34 @@ namespace MieAyamPakAgus.BLL
         {
             return _dal.GetCount();
         }
+
+        public (int success, int failed, string error) ImportExcel(System.Data.DataTable dt)
+        {
+            int success = 0, failed = 0;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                try
+                {
+                    int idPel = Convert.ToInt32(dt.Rows[i]["id_pelanggan"]);
+                    int idMeja = Convert.ToInt32(dt.Rows[i]["id_meja"]);
+                    DateTime waktu = Convert.ToDateTime(dt.Rows[i]["waktu_kedatangan"]);
+                    int jumlah = Convert.ToInt32(dt.Rows[i]["jumlah_orang"]);
+                    string bukti = dt.Rows[i]["bukti_transaksi"]?.ToString()?.Trim();
+
+                    if (idPel <= 0 || idMeja <= 0 || jumlah <= 0)
+                    {
+                        failed++;
+                        continue;
+                    }
+                    AddReservasi(idPel, idMeja, waktu, jumlah, bukti);
+                    success++;
+                }
+                catch
+                {
+                    failed++;
+                }
+            }
+            return (success, failed, null);
+        }
     }
 }

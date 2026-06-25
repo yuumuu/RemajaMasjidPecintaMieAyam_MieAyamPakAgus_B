@@ -52,7 +52,8 @@ namespace MieAyamPakAgus.Forms
         private void OpenMainForm()
         {
             this.Hide();
-            CRUDForm main = new CRUDForm();
+            // CRUDForm main = new CRUDForm();
+            FormMain main = new FormMain();
             main.Show();
         }
     }

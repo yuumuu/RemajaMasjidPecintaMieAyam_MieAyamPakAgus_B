@@ -46,5 +46,30 @@ namespace MieAyamPakAgus.BLL
         {
             return _dal.GetCount();
         }
+
+        public (int success, int failed, string error) ImportExcel(System.Data.DataTable dt)
+        {
+            int success = 0, failed = 0;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                try
+                {
+                    string nama = dt.Rows[i]["nama"]?.ToString()?.Trim();
+                    string noTelp = dt.Rows[i]["no_telepon"]?.ToString()?.Trim();
+                    if (string.IsNullOrEmpty(nama) || string.IsNullOrEmpty(noTelp))
+                    {
+                        failed++;
+                        continue;
+                    }
+                    AddPelanggan(nama, noTelp);
+                    success++;
+                }
+                catch
+                {
+                    failed++;
+                }
+            }
+            return (success, failed, null);
+        }
     }
 }

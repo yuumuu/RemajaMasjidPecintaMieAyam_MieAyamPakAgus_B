@@ -7,16 +7,17 @@ namespace MieAyamPakAgus.DAL
 {
     public class DBHelper
     {
-        private readonly string _connStr;
+        private readonly string connStr;
 
         public DBHelper()
         {
-            _connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            //connStr = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+            connStr = $@"Data Source=Haidaryuum,1433;Initial Catalog=MieAyamPakAgus;User ID=sa;Password=123456;";
         }
 
         public SqlConnection GetConnection()
         {
-            return new SqlConnection(_connStr);
+            return new SqlConnection(connStr);
         }
 
         public DataTable ExecuteDataTable(string spName, SqlParameter[] parameters = null)
